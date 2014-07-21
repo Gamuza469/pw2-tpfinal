@@ -1,0 +1,31 @@
+
+body{
+	background-color:#E0ECF8; 
+}
+
+#contenedor { 
+	background-color:#CED8F6; 
+	border-style:solid; 
+	border-color:#000000; 
+	margin: 0 auto;
+	width:570px; 
+	height:auto; }
+
+.busca_vue {
+	background-color:#F2F2F2; 
+	border-color:#EEE000;
+	margin: 15 0 10 0;
+}	
+
+.boton{
+	text-align:center;
+}
+
+.nombreItem {
+    display: inline-block;
+    width: 120px;
+}
+
+.error {
+	color: red;
+}

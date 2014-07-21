@@ -1,0 +1,16 @@
+DROP TABLE pasaje;
+DROP TABLE forma_pago;
+DROP TABLE clase_vuelo;
+DROP TABLE pasajero;
+DROP TABLE banco;
+DROP TABLE emisor_medio_pago;
+DROP TABLE medio_pago;
+DROP TABLE tipo_pago;
+DROP TABLE vuelo;
+DROP TABLE nombre_clase;
+DROP TABLE avion;
+DROP TABLE aeropuerto;
+DROP TABLE modelo_avion;
+DROP TABLE ciudad;
+DROP TABLE marca_avion;
+DROP TABLE provincia;
