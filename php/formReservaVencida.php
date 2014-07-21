@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<div id="contenedor">
-			<form action="./action/reservaVencida.php" id="formReservaVencida" method="POST" enctype="text/plain">
+			<form action="./action/reservaVencida.php" id="formReservaVencida" method="post">
 				<div class="encabezado">
 					<div class="boarding_pass">
 						Su reserva ha vencido y su pasaje ha sido reasignado.<br>

@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<div id="contenedor5">
-			<form action="./action/elegirAsientos.php" id="formCheckIn" method="POST" enctype="text/plain">
+			<form action="./action/elegirAsientos.php" id="formCheckIn" method="post">
 				<div class="encabezado">
 					<div class="busca_vuelo">Check-In (Selecci&oacute;n de Asiento)</div>
 					<div class="busca_vue">

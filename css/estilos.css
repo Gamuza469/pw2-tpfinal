@@ -1,6 +1,6 @@
-
 body{
-	background-color:#E0ECF8; 
+	background-color:#E0ECF8;
+	font-family: 'Tahoma'
 }
 
 #contenedor { 
@@ -9,12 +9,13 @@ body{
 	border-color:#000000; 
 	margin: 0 auto;
 	width:570px; 
-	height:auto; }
+	height:auto; 
+}
 
 .busca_vue {
 	background-color:#F2F2F2; 
 	border-color:#EEE000;
-	margin: 15 0 10 0;
+	margin: 25 0 10 0;
 }	
 
 .boton{
@@ -23,9 +24,15 @@ body{
 
 .nombreItem {
     display: inline-block;
-    width: 120px;
+    width: 175px;
 }
 
 .error {
 	color: red;
+}
+
+#tarjetas, #bancos, #cia_emisora, #formas_pago,
+#servicios, #nro_tarj, #nro_ident, #nro_cuenta,
+#efect {
+	display: none;
 }

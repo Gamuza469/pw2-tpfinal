@@ -1,57 +1,78 @@
 <html>
 	<head>
 		<title>.:: Pagar Pasaje ::.</title>
-		<link href="../css/estilos.css" rel="stylesheet" type="text/css" />
+		<?php
+			require_once('./include/includeStylesheetAndScript.php');
+		?>
+		<script src="../js/formPagoPasaje.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="contenedor">
-			<form action="./action/" id="formPagoPasaje" method="POST" enctype="text/plain">
+			<form action="./action/pagandoPasaje.php" id="formPagoPasaje" method="post">
 				<div class="encabezado">
 					<div class="busca_vuelo">Pagar Pasaje</div>
 					<div class="busca_vue">
-						<div class="medio_pago"><label class="nombreItem">Medio de Pago:</label>
-							<select>
-								 <option>Seleccione</option>
-								 <option>1</option>
-								 <option>2</option>
-								 <option>3</option>
+						<div class="monto">
+							<label class="nombreItem">Monto a Pagar:</label>&nbsp;<input type="text" id="monto" name="monto" readonly />
+						</div>	
+						<div id="medio_pago"><label class="nombreItem">Medio de Pago:</label>
+							<select id="medioPago" name="medioPago">
+								 <option value="" selected>Seleccione...</option>
+								 <option value="TARD">debito</option>
+								 <option value="PAGE">electronico</option>
+								 <option value="TRAB">cuenta</option>
+								 <option value="EFEC">cuenta</option>
 							 </select>
 						</div>
-						<div class="cia_emisora"><label class="nombreItem">Compa&ntilde&iacute;a Emisora:</label>
-							<select>
-								 <option>Seleccione</option>
+						<div id="bancos"><label class="nombreItem">Banco:</label>
+							<select id="banco" name="banco">
+								 <option value="" selected>Seleccione...</option>
 								 <option>1</option>
 								 <option>2</option>
 								 <option>3</option>									 
 							 </select>
 						</div>
-						<div class="tarjeta"><label class="nombreItem">Tipo de Tarjeta:</label>
-							<select>
-								 <option>Seleccione</option>
+						<div id="cia_emisora"><label class="nombreItem">Compa&ntilde&iacute;a Emisora:</label>
+							<select id="emisor" name="emisor">
+								 <option value="" selected>Seleccione...</option>
 								 <option>1</option>
 								 <option>2</option>
-								 <option>3</option>
+								 <option>3</option>									 
 							 </select>
 						</div>
-						<div class="forma_pago"><label class="nombreItem">Forma de Pago:</label>
-							<select>
-								 <option>Seleccione</option>
+						<div id="servicios"><label class="nombreItem">Servicio de Pagos:</label>
+							<select id="servicio" name="servicio">
+								 <option value="" selected>Seleccione...</option>
+								 <option>1</option>
+								 <option>2</option>
+								 <option>3</option>									 
+							 </select>
+						</div>
+						<div id="formas_pago"><label class="nombreItem">Forma de Pago:</label>
+							<select id="formaPago" name="formaPago">
+								 <option value="" selected>Seleccione...</option>
 								 <option>1</option>
 								 <option>2</option>
 								 <option>3</option>
 							 </select>
 						</div>	
-						<div class="nro_tarj">
-							<label class="nombreItem">Nro. de Tarjeta:</label>&nbsp;<input type="text" id="nro_tarjeta" name="nro_tarjeta"/>
+						<div id="nro_tarj">
+							<label class="nombreItem">Nro. de Tarjeta:</label>&nbsp;<input type="text" id="nroTarjeta" maxlength="16" name="nroTarjeta"/>
 						</div>	
-						<div class="nro_Identificador">
-							<label class="nombreItem">Nro. Identificador:</label>&nbsp;<input type="text" id="nro_identificador" name="nro_identificador"/>
+						<div id="nro_ident">
+							<label class="nombreItem">Nro. Identificador:</label>&nbsp;<input type="text" id="nroIdentificador" maxlength="3" name="nroIdentificador"/>
 						</div>		
+						<div id="nro_cuenta">
+							<label class="nombreItem">Nro. Cuenta (C.B.U.):</label>&nbsp;<input type="text" id="nroCuenta" maxlength="22" name="nroCuenta"/>
+						</div>	
+						<div id="efect">
+							Deber&aacute; acercarse a nuestras oficinas con el fin de abonar el monto requerido.
+						</div>
 						<BR>
 						<div class="boton">
 							<div class="opcion">
-								<input type="submit" value="Pagar" />
-								<input type="submit" value="Borrar Datos" />
+								<input name="submit" type="submit" value="Pagar" />
+								<input type="reset" value="Borrar Datos" />
 							</div>
 						</div>							
 					</div>

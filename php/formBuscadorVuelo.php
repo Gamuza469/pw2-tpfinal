@@ -1,24 +1,28 @@
 <html>
 	<head>
+		<?php
+			//Lógica principal
+			//Lógica de sesión
+			//Manejo de errores
+		?>
 		<title>.:: Buscador de Vuelo ::.</title>
-		<link href="../css/estilos.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="../js/jquery.validate.js"></script>
-		<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+		<?php
+			require_once('./include/includeStylesheetAndScript.php');
+		?>
 	</head>
 	<body>
 		<div id="contenedor">
-			<form action="./action/procesarVuelo.php" id="formBuscadorVuelo" method="POST" enctype="text/plain">
+			<form action="./action/procesarVuelo.php" id="formBuscadorVuelo" method="post">
 				<div class="encabezado">
 					<div class="busca_vuelo">Buscador de Vuelo</div>
 					<div class="busca_vue">
 						<div class="destino">
-							<label class="nombreItem">Destino:</label>&nbsp;<input type="text" id="destino" name="destino"/>&nbsp;
-							<input type="button" id="buscarDestino" name="buscarDestino" value="Buscar Destino"/>
+							<label class="nombreItem">Destino:</label>&nbsp;<textarea id="destino" name="destino" readonly>asdas</textarea>&nbsp;
+							<input type="button" id="buscarDestino" maxlength="128" name="buscarDestino" value="Buscar Destino"/>
 						</div>
 						<div class="origen">
-							<label class="nombreItem">Origen:</label>&nbsp;<input type="text" id="origen" name="origen"/>&nbsp;
-							<input type="button" id="buscarOrigen" name="buscarOrigen" value="Buscar Origen"/>
+							<label class="nombreItem">Origen:</label>&nbsp;<textarea id="origen" name="origen" readonly>asdas</textarea>&nbsp;
+							<input type="button" id="buscarOrigen" maxlength="128" name="buscarOrigen" value="Buscar Origen"/>
 						</div>
 						<div class="fecha_partida">
 							<label class="nombreItem">Fecha Partida:</label>&nbsp;<input type="text" id="fechaPartida" name="fechaPartida"/>
@@ -28,17 +32,21 @@
 						</div>
 						<div class="circuito">
 							<label class="nombreItem">Circuito:</label>
-							<label>Ida</label><input type="radio" name="idaVuelta" id="ida" value="ida"/>
-							<label>Ida/Vuelta</label><input type="radio" name="idaVuelta" id="vuelta" value="vuelta"/>
+							<label>Ida</label><input type="radio" name="idaVuelta[]" id="ida" value="ida"/>
+							<label>Ida/Vuelta</label><input type="radio" name="idaVuelta[]" id="vuelta" value="vuelta"/>
 						</div>
 						<br>
 						<div class="boton">
-							<div class="verifica"><input type="submit" value="Verificar" /></div>
-						</div>							
+							<div class="verifica"><input name="submit" type="submit" value="Verificar" /></div>
+						</div>
+						<?php
+							echo('<input id="destino_hidden" name="destino_hidden" value="'."ABCD".'" type="hidden">');
+							echo('<input id="origen_hidden" name="origen_hidden" value="'."ABCD".'" type="hidden">');
+						?>						
 					</div>
 				</div>
 			</form>
-		</div>		
+		</div>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('#formBuscadorVuelo').validate({
@@ -55,7 +63,7 @@
 						fechaRegreso: {
 							required: true
 						},
-						idaVuelta: {
+						'idaVuelta[]': {
 							required: true
 						}
 					},
@@ -64,7 +72,7 @@
 						origen:			'Ingrese el origen.',
 						fechaPartida:	'Especifique la fecha de partida.',
 						fechaRegreso:	'Especifique la fecha de regreso.',
-						idaVuelta:		'Especifique la ruta del vuelo.'
+						'idaVuelta[]':		'Especifique la ruta del vuelo.'
 					}
 				});
 			});

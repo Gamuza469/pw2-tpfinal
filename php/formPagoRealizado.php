@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<div id="contenedor">
-			<form action="./action/despuesPagar.php" id="formPagoRealizado" method="POST" enctype="text/plain">
+			<form action="./action/despuesPagar.php" id="formPagoRealizado" method="post">
 				<div class="encabezado">
 					<div class="boarding_pass">Su pago ha sido registrado</div>
 					<div class="busca_vue">

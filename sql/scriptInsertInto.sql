@@ -526,21 +526,24 @@ INSERT INTO banco (nombre) VALUES
 	('Nación')
 ;
 
-INSERT INTO emisor_medio_pago (nombre) VALUES
+INSERT INTO empresa_medio_pago (nombre) VALUES
 	('American Express'),
 	('VISA'),
 	('MasterCard'),
 	('Tarjeta Naranja'),
-	('Cabal')
+	('Cabal'),
+	('Pago Mis Cuentas'),
+	('Pago Fácil'),
+	('Bapro Pagos')
 ;
 
-INSERT INTO medio_pago (nombre) VALUES
-	('Tarjeta de crédito'),
-	('Tarjeta de débito'),
-	('Pago Fácil'),
-	('Pago Mis Cuentas'),
-	('Efectivo'),
-	('Transferencia bancaria')
+INSERT INTO medio_pago (codigo_medio_pago, nombre) VALUES
+	('TARC','Tarjeta de crédito'),
+	('TARD','Tarjeta de débito'),
+	('PAGT','Pago tercerizado'),
+	('PAGE','Pago electrónico'),
+	('EFEC','Efectivo'),
+	('TRAB','Transferencia bancaria')
 ;
 
 INSERT INTO tipo_pago (nombre) VALUES
@@ -1081,7 +1084,7 @@ INSERT INTO clase_vuelo (numero_vuelo, id_nombre_clase, precio) VALUES
 ;
 
 INSERT INTO forma_pago (id_banco, id_emisor_medio_pago, id_medio_pago, id_tipo_pago) VALUES
-	((SELECT id_banco FROM banco WHERE nombre = ''),(SELECT id_emisor_medio_pago FROM emisor_medio_pago WHERE nombre = ''),(SELECT id_medio_pago FROM medio_pago WHERE nombre = ''),(SELECT id_tipo_pago FROM tipo_pago WHERE nombre = ''))
+	((SELECT id_banco FROM banco WHERE nombre = 'Supervielle'),(SELECT id_emisor_medio_pago FROM emisor_medio_pago WHERE nombre = 'Visa'),(SELECT id_medio_pago FROM medio_pago WHERE nombre = 'Tarjeta de crédito'),(SELECT id_tipo_pago FROM tipo_pago WHERE nombre = '12 (doce) cuotas sin interés'))
 ;
 
 

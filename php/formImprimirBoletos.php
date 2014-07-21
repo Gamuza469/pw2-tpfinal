@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<div id="contenedor">
-			<form action="./action/imprimirBoletos.php" id="formImprimirBoletos" method="POST" enctype="text/plain">
+			<form action="./action/imprimirBoletos.php" id="formImprimirBoletos" method="post">
 				<div class="encabezado">
 					<div class="boarding_pass">Pasaje y Boarding Pass</div>
 					<div class="busca_vue">

@@ -91,16 +91,16 @@ CREATE TABLE banco (
 	PRIMARY KEY (`id_banco`)
 );
 
-CREATE TABLE emisor_medio_pago (
-	id_emisor_medio_pago	INTEGER		AUTO_INCREMENT,
+CREATE TABLE empresa_medio_pago (
+	id_empresa_medio_pago	INTEGER		AUTO_INCREMENT,
 	nombre					VARCHAR(64),
-	PRIMARY KEY (`id_emisor_medio_pago`)
+	PRIMARY KEY (`id_empresa_medio_pago`)
 );
 
 CREATE TABLE medio_pago (
-	id_medio_pago				INTEGER		AUTO_INCREMENT,
+	codigo_medio_pago			VARCHAR(4)		AUTO_INCREMENT,
 	nombre						VARCHAR(64),
-	PRIMARY KEY (`id_medio_pago`)
+	PRIMARY KEY (`codigo_medio_pago`)
 );
 
 CREATE TABLE tipo_pago (
@@ -115,6 +115,7 @@ CREATE TABLE pasajero (
 	nombre				VARCHAR(512),
 	fecha_nacimiento	DATE,
 	email				VARCHAR(256),
+	password			VARCHAR(32),
 	PRIMARY KEY (`dni`)
 );
 
@@ -133,19 +134,19 @@ CREATE TABLE clase_vuelo (
 );
 
 CREATE TABLE forma_pago (
-	id_forma_pago			INTEGER			AUTO_INCREMENT,
-	id_banco				INTEGER,
-	id_emisor_medio_pago	INTEGER,
-	id_medio_pago			INTEGER,
-	id_tipo_pago			INTEGER,
-	PRIMARY KEY (`id_forma_pago`, `id_banco`, `id_emisor_medio_pago`, `id_medio_pago`, `id_tipo_pago`),
+	id_forma_pago				INTEGER			AUTO_INCREMENT,
+	id_banco					INTEGER,
+	id_empresa_medio_pago		INTEGER,
+	codigo_medio_pago			INTEGER,
+	id_tipo_pago				INTEGER,
+	PRIMARY KEY (`id_forma_pago`, `id_banco`, `id_empresa_medio_pago`, `codigo_medio_pago`, `id_tipo_pago`),
 	FOREIGN KEY (`id_banco`)			REFERENCES `banco` (`id_banco`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
-	FOREIGN KEY (`id_emisor_medio_pago`)			REFERENCES `emisor_medio_pago` (`id_emisor_medio_pago`)
+	FOREIGN KEY (`id_empresa_medio_pago`)			REFERENCES `empresa_medio_pago` (`id_empresa_medio_pago`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
-	FOREIGN KEY (`id_medio_pago`)			REFERENCES `medio_pago` (`id_medio_pago`)
+	FOREIGN KEY (`codigo_medio_pago`)			REFERENCES `medio_pago` (`codigo_medio_pago`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	FOREIGN KEY (`id_tipo_pago`)			REFERENCES `tipo_pago` (`id_tipo_pago`)
