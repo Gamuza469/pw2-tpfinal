@@ -1,7 +1,9 @@
 <html>
 	<head>
 		<title>.:: Pago Realizado ::.</title>
-		<link href="../css/estilos.css" rel="stylesheet" type="text/css" />
+		<?php
+			require_once('./include/includeStylesheetAndScript.php');
+		?>
 	</head>
 	<body>
 		<div id="contenedor">

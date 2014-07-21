@@ -18,13 +18,21 @@ $(document).ready(function(){
 		if (medioPago == 'TARC' || medioPago == 'TARD') {
 			addTarjetaRules();
 			$('#bancos').show();
+			$('#cia_emisora').show();
+			$('#formas_pago').show();
+			$('#nro_tarj').show();
+			$('#nro_ident').show();
+			$('#banco').prop('disabled', false);
 		} else if (medioPago == 'PAGT' || medioPago == 'PAGE') {
 			addServicioRules();
 			$('#servicios').show();
+			$('#servicio').prop('disabled', false);
 		} else if (medioPago == 'TRAB') {
 			addTransferenciaRules();
 			$('#bancos').show();
-		} else {
+			$('#nro_cuenta').show();
+			$('#banco').prop('disabled', false);
+		} else if (medioPago == 'EFEC') {
 			$('#efect').show();
 		}
 	});
@@ -32,20 +40,36 @@ $(document).ready(function(){
 	$('#banco').change(function(){
 		var medioPago = $('#medioPago').children('option:selected').val();
 		if (medioPago == 'TARC' || medioPago == 'TARD') {
-			$('#cia_emisora').show();
+			$('#emisor option').eq(0).prop('selected', true);
+			$('#formaPago option').eq(0).prop('selected', true);
+			$('#nroTarjeta').val('');
+			$('#nroIdentificador').val('');
+			
+			$('#formaPago').prop('disabled', true);
+			$('#nroTarjeta').prop('disabled', true);
+			$('#nroIdentificador').prop('disabled', true);
+				
+			$('#emisor').prop('disabled', false);
 		} else {
-			$('#nro_cuenta').show();
+			$('#nroCuenta').prop('disabled', false);
 		}
 		
 	});
 	
 	$('#emisor').change(function(){
-		$('#formas_pago').show();
+		$('#formaPago option').eq(0).prop('selected', true);
+		$('#nroTarjeta').val('');
+		$('#nroIdentificador').val('');
+		
+		$('#nroTarjeta').prop('disabled', true);
+		$('#nroIdentificador').prop('disabled', true);
+	
+		$('#formaPago').prop('disabled', false);
 	});
 	
 	$('#formaPago').change(function(){
-		$('#nro_tarj').show();
-		$('#nro_ident').show();
+		$('#nroTarjeta').prop('disabled', false);
+		$('#nroIdentificador').prop('disabled', false);
 	});
 });
 
@@ -60,6 +84,11 @@ function resetAllFields () {
 	$('#formaPago option').eq(0).prop('selected',true);
 	$('#servicio option').eq(0).prop('selected',true);
 	
+	$('#banco').prop('disabled',true);
+	$('#emisor').prop('disabled',true);
+	$('#formaPago').prop('disabled',true);
+	$('#servicio').prop('disabled',true);
+	
 	$('#nro_tarj').hide();
 	$('#nro_ident').hide();
 	$('#nro_cuenta').hide();
@@ -67,6 +96,10 @@ function resetAllFields () {
 	$('#nroTarjeta').val('');
 	$('#nroIdentificador').val('');
 	$('#nroCuenta').val('');
+	
+	$('#nroTarjeta').prop('disabled',true);
+	$('#nroIdentificador').prop('disabled',true);
+	$('#nroCuenta').prop('disabled',true);
 	
 	$('#efect').hide();
 }
@@ -136,6 +169,13 @@ function addServicioRules () {
 }
 
 function addTransferenciaRules () {
+	$('#banco').rules('add',{
+		required: true,
+		messages: {
+			required: 'Seleccione un banco.'
+		}
+	});
+	
 	$('#nroCuenta').rules('add',{
 		required: true,
 		digits: true,

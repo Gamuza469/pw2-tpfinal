@@ -1,4 +1,6 @@
 <?php
+	require_once('../include/commonFunctions.php');
+	
 	$error = false;
 	$destino = '';
 	$origen = '';
@@ -8,45 +10,97 @@
 	$mensajeError = '';
 	
 	if (isset($_POST["submit"])) {
-		//Revisar largo de datos
-		//Revisar validez ruta origen y destino
 		if (!empty($_POST["destino_hidden"])) {
-			$destino = $_POST["destino"];
+			$destino = $_POST["destino_hidden"];
+			if (preg_match('/[A-Z]{4,4}/', $destino) === 0) {
+				$error = true;
+			}
 		} else {
 			$error = true;
-			$mensajeError = $mensajeError.'Destino inv&aacute;lido.<br>'."\n";
 		}
 		
+		if ($error == true) {
+			$mensajeError = $mensajeError.'Destino inv&aacute;lido.<br>'."\n";
+			$error = false;
+		}
+		
+		/*---------------------------------------------------------------------------------*/
+		
 		if (!empty($_POST["origen_hidden"])) {
-			$origen = $_POST["origen"];
+			$origen = $_POST["origen_hidden"];
+			if (preg_match('/[A-Z]{4,4}/', $origen) === 0) {
+				$error = true;
+			}
 		} else {
 			$error = true;
-			$mensajeError = $mensajeError.'Origen inv&aacute;lido.<br>'."\n";
 		}
+		
+		if ($error == true) {
+			$mensajeError = $mensajeError.'Origen inv&aacute;lido.<br>'."\n";
+			$error = false;
+		}
+		
+		/*---------------------------------------------------------------------------------*/
 		
 		if (!empty($_POST["fechaPartida"])) {
 			$fechaPartida = $_POST["fechaPartida"];
+			if (preg_match('/\d{2,2}\/\d{2,2}\/\d{4,4}/', $fechaPartida) === 0) {
+				$error = true;
+			} else {
+				$fechaPartida = formatDateARToUTC($fechaPartida);
+			}
 		} else {
 			$error = true;
-			$mensajeError = $mensajeError.'Fecha de partida inv&aacute;lida.<br>'."\n";
 		}
+		
+		if ($error == true) {
+			$mensajeError = $mensajeError.'Fecha de partida inv&aacute;lida.<br>'."\n";
+			$error = false;
+		}
+		
+		/*---------------------------------------------------------------------------------*/
 		
 		if (!empty($_POST["fechaRegreso"])) {
 			$fechaRegreso = $_POST["fechaRegreso"];
+			if (preg_match('/\d{2,2}\/\d{2,2}\/\d{4,4}/', $fechaRegreso) === 0) {
+				$error = true;
+			} else {
+				$fechaRegreso = formatDateARToUTC($fechaRegreso);
+			}
 		} else {
 			$error = true;
-			$mensajeError = $mensajeError.'Fecha de regreso inv&aacute;lida.<br>'."\n";
 		}
-		// if vuelta, $vuelta = true;
-		if (!empty($_POST["idaVuelta"]) || ($idaVuelta == 'ida' || idaVuelta == 'vuelta')) {
+		
+		if ($error == true) {
+			$mensajeError = $mensajeError.'Fecha de regreso inv&aacute;lida.<br>'."\n";
+			$error = false;
+		}
+		
+		/*---------------------------------------------------------------------------------*/
+		
+		if (!empty($_POST["idaVuelta"])) {
 			$idaVuelta = $_POST["idaVuelta"];
+			if ($idaVuelta != 'ida' && $idaVuelta != 'vuelta') {
+				$error = true;
+			} else {
+				$idaVuelta = true;
+			}
 		} else {
 			$error = true;
+		}
+		
+		if ($error == true) {
 			$mensajeError = $mensajeError.'Circuito inv&aacute;lido.<br>'."\n";
 		}
+		
+		/*---------------------------------------------------------------------------------*/
 	} else {
 		$error = true;
 		$mensajeError = $mensajeError.'Acceso ilegal<br>'."\n";
+	}
+	
+	if ($mensajeError != '') {
+		$error = true;
 	}
 	
 	if ($error == false) {
@@ -57,11 +111,9 @@
 		
 		//Persistir datos de usuario en sesión
 		//Persistir datos del sistema en cookies
-		
 		header("Location: ../formReservarPasaje.php");
 	} else {
 		//Enviar mensaje de error mediante sesión
-		echo("$mensajeError");
-		//header("Location: ../formBuscadorVuelos.php");
+		header("Location: ../formBuscadorVuelos.php");
 	}
 ?>

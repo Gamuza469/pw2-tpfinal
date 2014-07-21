@@ -15,7 +15,7 @@
 							<label class="nombreItem">Nombre:</label>&nbsp;<input type="text" id="nombre" maxlength="256" name="nombre"/>
 						</div>	
 						<div class="apellido">
-							<label class="nombreItem">Apellido:</label>&nbsp;<input type="text" id="apellido" maxlength="255" name="apellido"/>
+							<label class="nombreItem">Apellido:</label>&nbsp;<input type="text" id="apellido" maxlength="254" name="apellido"/>
 						</div>	
 						<div class="dni">
 							<label class="nombreItem">DNI:</label>&nbsp;<input type="text" id="dni" maxlength="8" name="dni"/>
@@ -50,10 +50,12 @@
 				$('#formReservarPasaje').validate({
 					rules: {
 						nombre: {
-							required: true
+							required: true,
+							maxlength: 256
 						},
 						apellido: {
-							required: true
+							required: true,
+							maxlength: 254
 						},
 						dni: {
 							digits: true,
@@ -73,6 +75,7 @@
 							required: true
 						},
 						confPassword: {
+							equalTo: '#password',
 							minlength: 4,
 							maxlength: 32,
 							required: true
@@ -84,9 +87,22 @@
 						dni:				'Ingrese su DNI.',
 						fechaNacimiento:	'Ingrese su fecha de nacimiento.',
 						email:				'Ingrese su direcci&oacute;n de E-Mail.',
-						password:			'Especifique una contrase&ntilde;a, m&iacute;nimo 4 caracteres.',
+						password:			'Especifique una contrase&ntilde;a, m&iacute;nimo 4 caracteres alfanum&eacute;ricos.',
 						confPassword:		'Las contrase&ntilde;as no coinciden.'
 					}
+				});
+				
+				$('#fechaNacimiento').datepicker({
+					buttonImage: '../css/images/calendar.gif',
+					buttonImageOnly: true,
+					changeMonth: true,
+					changeYear: true,
+					dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+					dateFormat: 'dd/mm/yy',
+					maxDate: "+0d",
+					monthNamesShort: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+					showOn: "button",
+					yearRange: 'c-125:c+0'
 				});
 			});
 		</script>

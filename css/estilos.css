@@ -1,6 +1,9 @@
 body{
 	background-color:#E0ECF8;
-	font-family: 'Tahoma'
+	background-image: url('../images/fondo2.jpg');
+	font-family: 'Tahoma';
+	background-repeat:no-repeat;
+	background-position:center top; 
 }
 
 #contenedor { 
@@ -33,6 +36,6 @@ body{
 
 #tarjetas, #bancos, #cia_emisora, #formas_pago,
 #servicios, #nro_tarj, #nro_ident, #nro_cuenta,
-#efect {
+#efect, #dialogBuscarAeropuerto{
 	display: none;
 }
