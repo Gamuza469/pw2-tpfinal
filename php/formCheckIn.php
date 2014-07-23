@@ -12,7 +12,7 @@
 					<div class="busca_vuelo">Check-In (Selecci&oacute;n de Asiento)</div>
 					<div class="busca_vue">
 						<div class="asientos">
-							<table id="vistaAsientos">
+							<table id="vistaAsientos" style="margin: auto">
 								<thead>
 								</thead>
 								<tbody>
@@ -114,7 +114,6 @@
 						if (anchoGrupoColumnaEconomyResto > 0) {
 							divisionesColumnasEconomy++;
 						}
-						//maxCantidadColumnasEconomy++;
 					}
 				} else {
 					if (parseInt(maxCantidadColumnasEconomy / cantidadColumnasEconomy, 10) == 1) {
@@ -160,7 +159,6 @@
 						if (anchoGrupoColumnaPrimeraResto > 0) {
 							divisionesColumnasPrimera++;
 						}
-						//maxCantidadColumnasPrimera++;
 					}
 				} else {
 					if (parseInt(maxCantidadColumnasPrimera / cantidadColumnasPrimera, 10) == 1) {
@@ -208,16 +206,20 @@
 							columnaActual.css('background-color', 'blue');
 						} else if (ubicacionColumna <= (maxCantidadColumnasEconomy + anchoGrupoColumnaEconomyResto + divisionesPintadas) && divisionesPintadas == 1) {
 							columnaActual.css('background-color', 'blue');
-						} else if (ubicacionColumna <= (maxCantidadColumnasEconomy + anchoGrupoColumnaEconomy + divisionesPintadas) && divisionesPintadas == 1 && (anchoTotalEconomy - (cantidadGrupoColumnasEconomy * maxCantidadColumnasEconomy)  == 1)) {
+						} else if (ubicacionColumna <= (maxCantidadColumnasEconomy + anchoGrupoColumnaEconomy + divisionesPintadas) && divisionesPintadas == 1 && (anchoTotalEconomy - (cantidadGrupoColumnasEconomy * maxCantidadColumnasEconomy)  == 1 || anchoTotalEconomy - (cantidadGrupoColumnasEconomy * maxCantidadColumnasEconomy)  == 2)) {
 							columnaActual.css('background-color', 'blue');
 						} else if (ubicacionColumna >= (maxCantidadColumnasEconomy + anchoGrupoColumnaEconomyResto + divisionesPintadas) && divisionesPintadas == 2) {
 							columnaActual.css('background-color', 'blue');
 						} else {
 							divisionesPintadas++;
 						}
-						
 					}
 				}
+				
+				//__________________________________________________________________________________________________________
+				// Fin colocacion asientos disponibles
+				// Inicio separacion de filas
+				//__________________________________________________________________________________________________________
 			});
 		</script>
 	</body>
