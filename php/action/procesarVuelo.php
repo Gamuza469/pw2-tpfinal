@@ -60,30 +60,33 @@
 		
 		/*---------------------------------------------------------------------------------*/
 		
-		if (!empty($_POST["fechaRegreso"])) {
-			$fechaRegreso = $_POST["fechaRegreso"];
-			if (preg_match('/\d{2,2}\/\d{2,2}\/\d{4,4}/', $fechaRegreso) === 0) {
-				$error = true;
-			} else {
-				$fechaRegreso = formatDateARToUTC($fechaRegreso);
-			}
-		} else {
-			$error = true;
-		}
-		
-		if ($error == true) {
-			$mensajeError = $mensajeError.'Fecha de regreso inv&aacute;lida.<br>'."\n";
-			$error = false;
-		}
-		
-		/*---------------------------------------------------------------------------------*/
-		
 		if (!empty($_POST["idaVuelta"])) {
 			$idaVuelta = $_POST["idaVuelta"];
 			if ($idaVuelta != 'ida' && $idaVuelta != 'vuelta') {
 				$error = true;
 			} else {
-				$idaVuelta = true;
+				if ($idaVuelta == 'vuelta') {
+					$idaVuelta = true;
+					/*---------------------------------------------------------------------------------*/
+					if (!empty($_POST["fechaRegreso"])) {
+						$fechaRegreso = $_POST["fechaRegreso"];
+						if (preg_match('/\d{2,2}\/\d{2,2}\/\d{4,4}/', $fechaRegreso) === 0) {
+							$error = true;
+						} else {
+							$fechaRegreso = formatDateARToUTC($fechaRegreso);
+						}
+					} else {
+						$error = true;
+					}
+					
+					if ($error == true) {
+						$mensajeError = $mensajeError.'Fecha de regreso inv&aacute;lida.<br>'."\n";
+						$error = false;
+					}
+					/*---------------------------------------------------------------------------------*/
+				} else {
+					$idaVuelta = false;
+				}
 			}
 		} else {
 			$error = true;
@@ -114,6 +117,8 @@
 		header("Location: ../formReservarPasaje.php");
 	} else {
 		//Enviar mensaje de error mediante sesión
-		header("Location: ../formBuscadorVuelos.php");
+		var_dump($_POST);
+		echo $mensajeError;
+		//header("Location: ../formBuscadorVuelo.php");
 	}
 ?>

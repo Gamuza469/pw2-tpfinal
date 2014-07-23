@@ -39,3 +39,14 @@ body{
 #efect, #dialogBuscarAeropuerto{
 	display: none;
 }
+
+table, tr, td {
+	border-style: solid; 
+	border-collapse:  collapse;
+	border-width: 1px;
+}
+
+td {
+	width: 10px;
+	height: 10px;
+}
