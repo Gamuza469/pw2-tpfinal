@@ -164,6 +164,7 @@ CREATE TABLE pasaje (
 	pagado				BOOLEAN,
 	checked_in			BOOLEAN,
 	fecha_reserva		DATE,
+	posicion			VARCHAR(6),
 	PRIMARY KEY (`id_pasaje`, `dni`, `id_clase_vuelo`, `id_forma_pago`),
 	FOREIGN KEY (`dni`)					REFERENCES `pasajero` (`dni`)
 		ON UPDATE CASCADE

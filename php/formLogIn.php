@@ -18,6 +18,10 @@
 							<label class="nombreItem">Contrase&ntilde;a:</label>&nbsp;<input type="password" maxlength="32" id="password" name="password"/>
 						</div>	
 						<BR>
+						<div class="recordar">
+							<label class="nombreItem">Recordar Usuario:</label>&nbsp;<input type="checkbox" id="recordar" name="recordar"/>
+						</div>	
+						<BR>
 						<div class="boton">
 							<div class="imprime">
 								<input type="submit" name="submit" value="Log-In"/>

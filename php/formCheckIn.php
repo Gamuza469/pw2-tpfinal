@@ -19,6 +19,9 @@
 								</tbody>
 							</table>
 						</div>
+						<div class="asientoSeleccionado">
+							Asiento seleccionado: <input id="asientoSeleccionado" type="text"/>
+						</div>
 						<div class="boton">
 							<div class="asiento_seleccion"><input name="submit" type="submit" value="Elegir Asiento" />
 							<input type="button" value="Borrar Selecci&oacute;n" /></div>
@@ -187,7 +190,7 @@
 					objetoCuerpoTabla.append('<tr></tr>');
 					filaActual = objetoCuerpoTabla.children('tr').eq(ubicacionFila - 1);
 					for (ubicacionColumna = 1; ubicacionColumna <= anchoTotalEconomy; ubicacionColumna++) {
-						filaActual.append('<td id="F' + ubicacionFila + 'C' + ubicacionColumna + '"></td>');
+						filaActual.append('<td class="asiento" id="F' + ubicacionFila + 'C' + ubicacionColumna + '"></td>');
 						columnaActual = filaActual.children('td').eq(ubicacionColumna - 1);
 					}
 				}
@@ -216,10 +219,20 @@
 					}
 				}
 				
+				//REESCRIBIR
+				//Primero que dibuje todos los cuadros en azul en la funcion de arriba
+				//Luego agregue columnas divisorias
+				//Repetir para separacion de filas
+				
 				//__________________________________________________________________________________________________________
 				// Fin colocacion asientos disponibles
 				// Inicio separacion de filas
 				//__________________________________________________________________________________________________________
+				
+				$('.asiento').click(function(){
+					$(this).css('background-color', 'red');
+					$('#asientoSeleccionado').val($(this).prop('id'));
+				});
 			});
 		</script>
 	</body>
