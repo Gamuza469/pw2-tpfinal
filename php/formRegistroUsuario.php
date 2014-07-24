@@ -1,16 +1,16 @@
 <html>
 	<head>
-		<title>.:: Reservar Pasaje ::.</title>
+		<title>.:: Registrar Usuario ::.</title>
 		<?php
 			require_once('./include/includeStylesheetAndScript.php');
 		?>
-		<script src="../js/formReservarPasaje.js" type="text/javascript"></script>
+		<script src="../js/formRegistroUsuario.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="contenedor">
-			<form action="./action/reservarPasaje.php" id="formReservarPasaje" method="post">
+			<form action="./action/registrarUsuario.php" id="formRegistroUsuario" method="post">
 				<div class="encabezado">
-					<div class="busca_vuelo">Reservar pasaje</div>
+					<div class="busca_vuelo">Registrar Usuario</div>
 					<div class="busca_vue">
 						<div class="nombre">
 							<label class="nombreItem">Nombre:</label>&nbsp;<input type="text" id="nombre" maxlength="256" name="nombre"/>
@@ -40,7 +40,7 @@
 						</div>
 						<BR>
 						<div class="boton">
-							<div class="reserva"><input name="submit" type="submit" value="Reservar Pasaje"/></div>
+							<div class="reserva"><input name="submit" type="submit" value="Registrar Usuario"/><input type="reset" value="Borrar Datos"/></div>
 						</div>							
 					</div>
 				</div>

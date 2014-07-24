@@ -39,6 +39,8 @@
 						<br>
 						<div class="boton">
 							<div class="verifica"><input name="submit" type="submit" value="Verificar" /></div>
+							<BR>
+							<input id="logIn" type="button" value="Realizar Log-In"/>
 						</div>
 						<div>
 							<input id="destino_hidden" name="destino_hidden" value="ABCD" type="hidden">

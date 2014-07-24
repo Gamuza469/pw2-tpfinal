@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('#formReservarPasaje').validate({
+	$('#formRegistroUsuario').validate({
 		rules: {
 			nombre: {
 				required: true,

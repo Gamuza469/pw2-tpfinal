@@ -14,7 +14,7 @@
 	if (isset ($_POST["submit"])) {
 		if (!empty($_POST["nombre"])) {
 			$nombre = $_POST["nombre"];
-			if (preg_match('/[A-Z]+/', $nombre) === 0) {
+			if (preg_match('/[A-Z]+/i', $nombre) === 0) {
 				$error = true;
 			}
 			if (strlen($nombre) > 256) {
@@ -33,7 +33,7 @@
 		
 		if (!empty($_POST["apellido"])) {
 			$apellido = $_POST["apellido"];
-			if (preg_match('/[A-Z]+/', $apellido) === 0) {
+			if (preg_match('/[A-Z]+/i', $apellido) === 0) {
 				$error = true;
 			}
 			if (strlen($nombre) > 254) {
@@ -151,6 +151,9 @@
 		header("Location: ../formPromptPago.php");		
 	} else {
 		//Enviar mensaje de error mediante sesión
-		header("Location: ../formReservarPasaje.php");
+		//header("Location: ../formReservarPasaje.php");
+		var_dump($_POST);
+		echo $mensajeError;
+		//header("Location: ../formRegistroUsuario.php");
 	}
 ?>

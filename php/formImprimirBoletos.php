@@ -1,7 +1,9 @@
 <html>
 	<head>
 		<title>.:: Imprimir Pasaje y Boarding Pass ::.</title>
-		<link href="../css/estilos.css" rel="stylesheet" type="text/css" />
+		<?php
+			require_once('./include/includeStylesheetAndScript.php');
+		?>
 	</head>
 	<body>
 		<div id="contenedor">
@@ -17,11 +19,21 @@
 								<label class="nombreItem">Pasaje</label>
 								<input name="impr_pasaj" type="submit" value="Imprimir" />
 								<input name="save_pasaj" type="submit" value="Guardar" />
-							</div>
+							</div><br>
+							<div class="boton">
+								<div class="imprime"><input id="close" type="button" value="Salir" /></div>
+							</div>	
 						</div>							
 					</div>
 				</div>
 			</form>	
 		</div>
+		<script	type="text/javascript">
+			$(document).ready(function(){
+				$('#close').click(function(){
+					window.location.href = '../index.php';
+				});
+			});
+		</script>
 	</body>
 </html>

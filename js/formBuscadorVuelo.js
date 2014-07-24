@@ -146,6 +146,9 @@ $(document).ready(function(){
 		}
 	});
 	
+	$('#logIn').click(function(){
+		window.location.href = './formLogIn.php';
+	});
 	blockAndResetFields();
 });
 

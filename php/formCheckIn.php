@@ -187,7 +187,7 @@
 					objetoCuerpoTabla.append('<tr></tr>');
 					filaActual = objetoCuerpoTabla.children('tr').eq(ubicacionFila - 1);
 					for (ubicacionColumna = 1; ubicacionColumna <= anchoTotalEconomy; ubicacionColumna++) {
-						filaActual.append('<td></td>');
+						filaActual.append('<td id="F' + ubicacionFila + 'C' + ubicacionColumna + '"></td>');
 						columnaActual = filaActual.children('td').eq(ubicacionColumna - 1);
 					}
 				}

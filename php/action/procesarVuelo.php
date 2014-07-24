@@ -114,7 +114,7 @@
 		
 		//Persistir datos de usuario en sesión
 		//Persistir datos del sistema en cookies
-		header("Location: ../formReservarPasaje.php");
+		header("Location: ../formLogIn.php");
 	} else {
 		//Enviar mensaje de error mediante sesión
 		var_dump($_POST);

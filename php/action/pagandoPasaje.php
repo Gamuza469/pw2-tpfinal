@@ -28,7 +28,7 @@
 		/*---------------------------------------------------------------------------------*/
 		
 		if ($medioPago != '') {
-			if ($medioPago == 'TARC' || medioPago == 'TARD' || $medioPago == 'TRAB') {
+			if ($medioPago == 'TARC' || $medioPago == 'TARD' || $medioPago == 'TRAB') {
 				if (!empty($_POST["banco"])) {
 					$banco = $_POST["banco"];
 				} else {
@@ -41,7 +41,7 @@
 				}
 				
 				/*---------------------------------------------------------------------------------*/
-			} else if (medioPago == 'TARC' || medioPago == 'TARD') {
+			} else if ($medioPago == 'TARC' || $medioPago == 'TARD') {
 				if (!empty($_POST["emisor"])) {
 					$emisor = $_POST["emisor"];
 				} else {
@@ -74,7 +74,7 @@
 						$error = true;
 					}
 					if (strlen($nroTarjeta) > 16) {
-						$error = true:
+						$error = true;
 					}
 				} else {
 					$error = true;
@@ -93,7 +93,7 @@
 						$error = true;
 					}
 					if (strlen($nroTarjeta) > 3) {
-						$error = true:
+						$error = true;
 					}
 				} else {
 					$error = true;
@@ -105,28 +105,54 @@
 				}
 				
 				/*---------------------------------------------------------------------------------*/
-			} else if (medioPago == 'PAGT' || medioPago == 'PAGE') {
+			} else if ($medioPago == 'PAGT' || $medioPago == 'PAGE') {
 				if (!empty($_POST["servicio"])) {
 					$servicio = $_POST["servicio"];
 				} else {
 					$error = true;
-					$mensajeError = $mensajeError.'666Circuito inv&aacute;lido.<br>'."\n";
 				}
-			} else if (medioPago == 'TRAB') {
+				
+				if ($error == true) {
+					$mensajeError = $mensajeError.'Servicio no puede ser nulo.<br>'."\n";
+					$error = false;
+				}
+			} else if ($medioPago == 'TRAB') {
 				if (!empty($_POST["nroCuenta"])) {
 					$nroCuenta = $_POST["nroCuenta"];
 				} else {
 					$error = true;
-					$mensajeError = $mensajeError.'888Circuito inv&aacute;lido.<br>'."\n";
 				}
-			} else if (medioPago == 'EFEC') {
+				
+				if ($error == true) {
+					$mensajeError = $mensajeError.'N&uacute;mero de cuenta inv&aacute;lido.<br>'."\n";
+					$error = false;
+				}
+			} else if ($medioPago == 'EFEC') {
 			} else {
 				$error = true;
+				
+				if ($error == true) {
+					$mensajeError = $mensajeError.'Medio de pago inv&aacute;lido.<br>'."\n";
+					$error = false;
+				}
 			}
 		} else {
 			$error = true;
+			
+			if ($error == true) {
+				$mensajeError = $mensajeError.'888Circuito inv&aacute;lido.<br>'."\n";
+				$error = false;
+			}
 		}
 	} else {
+		$error = true;
+		
+		if ($error == true) {
+			$mensajeError = $mensajeError.'Acceso ilegal.<br>'."\n";
+		}
+	}
+	
+	if ($mensajeError != '') {
 		$error = true;
 	}
 	
