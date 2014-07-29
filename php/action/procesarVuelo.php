@@ -114,11 +114,11 @@
 		
 		//Persistir datos de usuario en sesión
 		//Persistir datos del sistema en cookies
-		header("Location: ../formLogIn.php");
+		header("Location: ../formRegistroUsuario.php");
 	} else {
 		//Enviar mensaje de error mediante sesión
-		var_dump($_POST);
-		echo $mensajeError;
-		//header("Location: ../formBuscadorVuelo.php");
+		//var_dump($_POST);
+		//echo $mensajeError;
+		header("Location: ../formBuscadorVuelo.php");
 	}
 ?>

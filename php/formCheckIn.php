@@ -230,7 +230,7 @@
 				//__________________________________________________________________________________________________________
 				
 				$('.asiento').click(function(){
-					$(this).css('background-color', 'red');
+					$(this).css('background-color', 'lightgreen');
 					$('#asientoSeleccionado').val($(this).prop('id'));
 				});
 			});

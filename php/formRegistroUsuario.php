@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>.:: Registrar Usuario ::.</title>
+		<title>.:: Registrar datos personales ::.</title>
 		<?php
 			require_once('./include/includeStylesheetAndScript.php');
 		?>
@@ -10,7 +10,7 @@
 		<div id="contenedor">
 			<form action="./action/registrarUsuario.php" id="formRegistroUsuario" method="post">
 				<div class="encabezado">
-					<div class="busca_vuelo">Registrar Usuario</div>
+					<div class="busca_vuelo">Registrar datos personales</div>
 					<div class="busca_vue">
 						<div class="nombre">
 							<label class="nombreItem">Nombre:</label>&nbsp;<input type="text" id="nombre" maxlength="256" name="nombre"/>
@@ -27,21 +27,18 @@
 						<div class="email">
 							<label class="nombreItem">E-Mail:</label>&nbsp;<input type="text" id="email" maxlength="256" name="email"/>
 						</div>
-						<BR><BR>
-						<div class="pass">
-							<label class="nombreItem">Contrase&ntilde;a:</label>&nbsp;<input type="password" id="password" maxlength="32" name="password"/>
-						</div>
-						<div class="confpass">
-							<label class="nombreItem">Confirme Contrase&ntilde;a:</label>&nbsp;<input type="password" id="confPassword" maxlength="32" name="confPassword"/>
-						</div>
 						<BR>
 						<div>
-							Se utilizar&aacute;n ambos DNI y contrase&ntilde;a para identificarlo en el sistema en pasos posteriores.
+							Se utilizar&aacute;n su DNI y c&oacute;digo de reserva para identificarlo en el sistema en pasos posteriores.
 						</div>
 						<BR>
 						<div class="boton">
 							<div class="reserva"><input name="submit" type="submit" value="Registrar Usuario"/><input type="reset" value="Borrar Datos"/></div>
-						</div>							
+							<input id="cancelarReserva" type="button" value="Cancelar Reserva"/>
+						</div>
+						<div id="divCancelarReserva" title="Cancelar reserva">
+							&iquest;Desea cancelar y descartar esta reserva?
+						</div>
 					</div>
 				</div>
 			</form>	

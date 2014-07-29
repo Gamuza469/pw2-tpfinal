@@ -1083,8 +1083,8 @@ INSERT INTO clase_vuelo (numero_vuelo, id_nombre_clase, precio) VALUES
 	((SELECT numero_vuelo FROM vuelo WHERE codigo_oaci_origen = 'SACO' AND codigo_oaci_destino = 'SAHZ' AND codigo_avion = 2 AND frecuencia = 'JVS'),(SELECT id_nombre_clase FROM nombre_clase WHERE nombre = 'Clase económica'),1347)
 ;
 
-INSERT INTO forma_pago (id_banco, id_emisor_medio_pago, id_medio_pago, id_tipo_pago) VALUES
-	((SELECT id_banco FROM banco WHERE nombre = 'Supervielle'),(SELECT id_emisor_medio_pago FROM emisor_medio_pago WHERE nombre = 'Visa'),(SELECT id_medio_pago FROM medio_pago WHERE nombre = 'Tarjeta de crédito'),(SELECT id_tipo_pago FROM tipo_pago WHERE nombre = '12 (doce) cuotas sin interés'))
+INSERT INTO forma_pago (id_banco, id_empresa_medio_pago, codigo_medio_pago, id_tipo_pago) VALUES
+	((SELECT id_banco FROM banco WHERE nombre = 'Supervielle'),(SELECT id_empresa_medio_pago FROM empresa_medio_pago WHERE nombre = 'Visa'),(SELECT codigo_medio_pago FROM medio_pago WHERE nombre = 'Tarjeta de crédito'),(SELECT id_tipo_pago FROM tipo_pago WHERE nombre = '12 (doce) cuotas sin interés'))
 ;
 
 

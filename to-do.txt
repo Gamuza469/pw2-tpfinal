@@ -14,6 +14,7 @@
 	- Pantalla de 'Confirmar Reserva'
 	- Pantalla de 'Bienvenido, usuario'
 	- Mostrar lista de vuelos disponibles según selección
+	- No calcula cuotas
 	- Etc.
 + Persistencia
 	- Lectura de datos
@@ -22,3 +23,4 @@
 	- Mapeo a sesión
 + Base de Datos
 	- Formas de Pago (generar inserts/opciones)
+	- No registra cantidad cuotas

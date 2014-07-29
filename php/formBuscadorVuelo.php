@@ -25,12 +25,21 @@
 							<label class="nombreItem">Origen:</label>&nbsp;<textarea id="origen" name="origen" maxlength="128" readonly></textarea>&nbsp;
 							<input type="button" id="buscarOrigen" name="buscarOrigen" value="Buscar Origen"/>
 						</div>
-						<div class="circuito">
+						<div id="divRuta">
+							<label class="nombreItem">Rutas disponibles:</label>
+							<select id="ruta" name="ruta">
+								<option value="" selected>Seleccione...</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>		
+							</select>
+						</div>
+						<div id="circuito">
 							<label class="nombreItem">Circuito:</label>
 							<label>Ida</label><input type="radio" disabled name="idaVuelta" id="ida" value="ida"/>
 							<label>Ida/Vuelta</label><input type="radio" disabled name="idaVuelta" id="vuelta" value="vuelta"/>
 						</div>
-						<div class="fecha_partida">
+						<div id="fecha_partida">
 							<label class="nombreItem">Fecha Partida:</label>&nbsp;<input type="text" disabled id="fechaPartida" name="fechaPartida" readonly />
 						</div>	
 						<div id="fecha_regreso">
@@ -38,9 +47,9 @@
 						</div>
 						<br>
 						<div class="boton">
-							<div class="verifica"><input name="submit" type="submit" value="Verificar" /></div>
-							<BR>
-							<input id="logIn" type="button" value="Realizar Log-In"/>
+							<div id="botonVerifica"><input name="submit" type="submit" value="Verificar" /></div>
+							<BR><hr>
+							<input id="logIn" type="button" value="Consultar Reserva"/>
 						</div>
 						<div>
 							<input id="destino_hidden" name="destino_hidden" value="ABCD" type="hidden">
@@ -51,7 +60,12 @@
 			</form>
 			<div id="dialogBuscarAeropuerto" title="Seleccione ubicaci&oacute;n:">
 				<form id="formBuscarAeropuerto">
-					<div class="pcia">
+					<div id="filtroBusqueda">
+						<label class="nombreItem">Filtrar por ciudad:</label><input checked type="radio" name="filtro" id="filtroCiudad" value="ciudad"/><br>
+						<label class="nombreItem">Filtrar por provincia:</label><input type="radio" name="filtro" id="filtroProvincia" value="provincia"/>
+						<hr>
+					</div>
+					<div id="divPcia">
 						<label class="nombreItem">Provincia:</label>
 						<select id="provincia" name="provincia">
 							 <option value="" selected>Seleccione...</option>
@@ -63,15 +77,6 @@
 					<div class="ciudad">
 						<label class="nombreItem">Ciudad:</label>
 						<select disabled id="ciudad" name="ciudad">
-							 <option value="" selected>Seleccione...</option>
-							 <option>1</option>
-							 <option>2</option>
-							 <option>3</option>
-						 </select>
-					</div>
-					<div class="aeropuerto">
-						<label class="nombreItem">Aeropuerto:</label>
-						<select disabled id="aeropuerto" name="aeropuerto">
 							 <option value="" selected>Seleccione...</option>
 							 <option>1</option>
 							 <option>2</option>

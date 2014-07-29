@@ -100,41 +100,6 @@
 			$mensajeError = $mensajeError.'E-Mail inv&aacute;lido.<br>'."\n";
 			$error = false;
 		}
-		
-		/*---------------------------------------------------------------------------------*/
-		
-		if (!empty($_POST["password"])) {
-			$password = $_POST["password"];
-			if (preg_match('/[A-Za-z0-9]+/', $password) === 0) {
-				$error = true;
-			}
-			if (strlen($password) > 32) {
-				$error = true;
-			}
-		} else {
-			$error = true;
-		}
-		
-		if ($error == true) {
-			$mensajeError = $mensajeError.'Contrase&ntilde;a  inv&aacute;lida.<br>'."\n";
-			$error = false;
-		}
-		
-		/*---------------------------------------------------------------------------------*/
-		
-		if (!empty($_POST["confPassword"])) {
-			$confPassword = $_POST["confPassword"];
-			if ($confPassword != $password) {
-				$error = true;
-			}
-		} else {
-			$error = true;
-		}
-		
-		if ($error == true) {
-			$mensajeError = $mensajeError.'Las contrase&ntilde;as no coinciden.<br>'."\n";
-			$error = false;
-		}
 				
 		/*---------------------------------------------------------------------------------*/
 	} else {

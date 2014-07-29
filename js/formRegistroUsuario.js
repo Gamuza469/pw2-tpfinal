@@ -59,4 +59,22 @@ $(document).ready(function(){
 		showOn: "button",
 		yearRange: 'c-125:c+0'
 	});
+	
+	$('#cancelarReserva').click(function(){
+		$('#divCancelarReserva').dialog({
+			buttons: [{
+				text: 'Cancelar reserva definitivamente',
+				click: function () {
+					window.location.href = './formBuscadorVuelo.php';
+					$(this).dialog('close');
+				}
+			},{
+				text: 'Continuar con la reserva',
+				click: function () {
+					$(this).dialog('close');
+				}
+			}],
+			width: 650
+		});
+	});
 });

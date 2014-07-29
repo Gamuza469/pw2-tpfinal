@@ -36,7 +36,9 @@ body{
 
 #tarjetas, #bancos, #cia_emisora, #formas_pago,
 #servicios, #nro_tarj, #nro_ident, #nro_cuenta,
-#efect, #dialogBuscarAeropuerto{
+#efect, #dialogBuscarAeropuerto, #divPcia, #divRuta,
+#circuito, #fecha_partida, #fecha_regreso, #botonVerifica,
+#divCancelarReserva {
 	display: none;
 }
 

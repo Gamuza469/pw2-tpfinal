@@ -1,4 +1,13 @@
 $(document).ready(function(){
+	$.ajax({
+		data: {hola: 'hola'},
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		//alert('jaja');
+		alert(data);
+	});
+	
 	$('#formBuscadorVuelo').validate({
 		rules: {
 			destino: {
@@ -69,7 +78,7 @@ $(document).ready(function(){
 						}
 						
 						if ($('#destino').val() != '' && $('#origen').val() != '') {
-							$('#ida, #vuelta').prop('disabled', false);
+							$('#divRuta').show();
 						}
 						
 						$(this).dialog('close');
@@ -120,47 +129,73 @@ $(document).ready(function(){
 	$('#fechaRegreso').datepicker('option', 'onSelect', function(){$(this).valid();});
 	
 	$('#provincia').change(function(){
-		resetBuscadorAeropuertoFields();
 		if ($(this).children('option').eq(0).prop('selected') == false) {
 			$('#ciudad').prop('disabled', false);
+		} else {
+			$('#ciudad').prop('disabled', true);
+			$('#ciudad option').eq(0).prop('selected',true);
 		}
 	});
 	
-	$('#ciudad').change(function(){
+	$('#filtroCiudad').click(function(){
+		$('#divPcia').hide();
+		$('#provincia option').eq(0).prop('selected',true);
+		$('#ciudad').prop('disabled', false);
+		$('#ciudad option').eq(0).prop('selected',true);
+	});
+	
+	$('#filtroProvincia').click(function(){
+		$('#divPcia').show();
+		$('#provincia').prop('disabled', false);
+		$('#ciudad').prop('disabled', true);
+		$('#ciudad option').eq(0).prop('selected',true);
+	});
+	
+	$('#ruta').change(function(){
 		if ($(this).children('option').eq(0).prop('selected') == false) {
-			$('#aeropuerto').prop('disabled', false);
+			$('#circuito').show();
+			$('#ida, #vuelta').prop('disabled', false);
 		} else {
-			$('#aeropuerto').prop('disabled', true);
+			$('#circuito').hide();
+			$('#ida, #vuelta').prop('checked', false);
+			$('#ida, #vuelta').prop('disabled', true);
+			$('#fecha_partida').hide();
+			$('#fecha_regreso').hide();
+			resetFechas();
+			$('#botonVerifica').hide();
 		}
-		$('#aeropuerto option').eq(0).prop('selected',true);
 	});
 	
 	$('#ida, #vuelta').click(function(){
 		resetFechas();
 		if ($(this).prop('id') == 'ida') {
 			$('#fechaPartida').prop('disabled', false);
+			$('#fecha_partida').show();
 			$('#fecha_regreso').hide();
 		} else {
 			$('#fechaPartida').prop('disabled', false);
+			$('#fecha_partida').show();
 			$('#fecha_regreso').show();
 		}
+		$('#botonVerifica').show();
 	});
 	
 	$('#logIn').click(function(){
-		window.location.href = './formLogIn.php';
+		window.location.href = './formVerificarReserva.php';
 	});
+	
 	blockAndResetFields();
 });
 
 function blockAndResetFields () {
 	resetFechas();
+	$('#ruta option').eq(0).prop('selected',true);
 	$('#destino, #origen').val('');
 	$('#ida, #vuelta').prop('checked', false);
 	
 	$('#ida, #vuelta').prop('disabled', true);
 	$('#provincia option').eq(0).prop('selected',true);
 	$('#ciudad option').eq(0).prop('selected',true);
-	$('#aeropuerto option').eq(0).prop('selected',true);
 }
 
 function resetFechas () {
@@ -169,7 +204,10 @@ function resetFechas () {
 }
 
 function resetBuscadorAeropuertoFields () {
+	$('#filtroCiudad').prop('checked', true);
+	$('#filtroProvincia').prop('checked', false);
+	$('#divPcia').hide();
 	$('#ciudad option').eq(0).prop('selected',true);
-	$('#aeropuerto option').eq(0).prop('selected',true);
-	$('#ciudad, #aeropuerto').prop('disabled', true);
+	$('#provincia').prop('disabled', true);
+	$('#ciudad').prop('disabled', false);
 }

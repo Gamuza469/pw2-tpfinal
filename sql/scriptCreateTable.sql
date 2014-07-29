@@ -98,7 +98,7 @@ CREATE TABLE empresa_medio_pago (
 );
 
 CREATE TABLE medio_pago (
-	codigo_medio_pago			VARCHAR(4)		AUTO_INCREMENT,
+	codigo_medio_pago			VARCHAR(4),
 	nombre						VARCHAR(64),
 	PRIMARY KEY (`codigo_medio_pago`)
 );
@@ -137,7 +137,7 @@ CREATE TABLE forma_pago (
 	id_forma_pago				INTEGER			AUTO_INCREMENT,
 	id_banco					INTEGER,
 	id_empresa_medio_pago		INTEGER,
-	codigo_medio_pago			INTEGER,
+	codigo_medio_pago			VARCHAR(4),
 	id_tipo_pago				INTEGER,
 	PRIMARY KEY (`id_forma_pago`, `id_banco`, `id_empresa_medio_pago`, `codigo_medio_pago`, `id_tipo_pago`),
 	FOREIGN KEY (`id_banco`)			REFERENCES `banco` (`id_banco`)
