@@ -38,6 +38,8 @@
 	}
 	
 	function executeQuery ($conexion, $stringQuery, $showMessages) {
+		$jsonString = '{"respuesta": [';
+	
 		if ($conexion !== false) {
 			
 			if (!empty($stringQuery)) {
@@ -67,9 +69,14 @@
 						if ($showMessages === true) {
 							echo var_dump($registro);
 						}
+						if ($jsonString != '{"respuesta": [') {
+							$jsonString = $jsonString.',';
+						}
+						$jsonString = $jsonString.json_encode($registro);
 					}
-					
-					return $resultadoConsulta;
+					$jsonString = $jsonString.']}';
+					echo $jsonString;
+					//echo $resultadoConsulta;
 				} else {
 					echo('La consulta a la base de datos ha fallado.<br>'."\n");
 					return false;

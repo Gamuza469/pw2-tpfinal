@@ -1,13 +1,4 @@
 $(document).ready(function(){
-	$.ajax({
-		data: {hola: 'hola'},
-		type: 'post',
-		url: './action/ajaxRequestAndResponse.php'
-	}).done(function(data){
-		//alert('jaja');
-		alert(data);
-	});
-	
 	$('#formBuscadorVuelo').validate({
 		rules: {
 			destino: {
@@ -32,11 +23,7 @@ $(document).ready(function(){
 			fechaPartida: 'Especifique la fecha de partida.',
 			fechaRegreso: 'Especifique la fecha de regreso.',
 			idaVuelta: 'Especifique la ruta del vuelo.'
-		},
-		//submitHandler: function(form) {
-			//Reformatea fechas
-			//form.submit();
-		//}
+		}
 	});
 	
 	$('#formBuscarAeropuerto').validate({
@@ -60,39 +47,9 @@ $(document).ready(function(){
 	
 	$('#buscarDestino, #buscarOrigen').click(function(event){
 		resetBuscadorAeropuertoFields();
+		
 		$('#provincia option').eq(0).prop('selected',true);
-		$('#dialogBuscarAeropuerto').dialog({
-			buttons: [{
-				text: 'Aceptar',
-				click: function(){
-					if ($('#formBuscarAeropuerto').valid()) {
-						var idBoton = $(event.target).prop('id');
-						if (idBoton == 'buscarDestino') {
-							$('#destino').val('El aeropuerto de alla');
-							$('#destino_hidden').val('GGGG');
-							$('#destino').valid();
-						} else {
-							$('#origen').val('El aeropuerto de aca');
-							$('#origen_hidden').val('ASDF');
-							$('#origen').valid();
-						}
-						
-						if ($('#destino').val() != '' && $('#origen').val() != '') {
-							$('#divRuta').show();
-						}
-						
-						$(this).dialog('close');
-					}
-				}
-			},{
-				text: 'Cancelar',
-				click: function(){
-					$(this).dialog('close');
-				}
-			}],
-			modal: true,
-			width: 500
-		});
+		mostrarDialogoAeropuerto(event);
 	});
 	
 	$('#fechaPartida, #fechaRegreso').datepicker({
@@ -130,6 +87,7 @@ $(document).ready(function(){
 	
 	$('#provincia').change(function(){
 		if ($(this).children('option').eq(0).prop('selected') == false) {
+			loadCiudadByProvincia($(this).val());
 			$('#ciudad').prop('disabled', false);
 		} else {
 			$('#ciudad').prop('disabled', true);
@@ -141,7 +99,7 @@ $(document).ready(function(){
 		$('#divPcia').hide();
 		$('#provincia option').eq(0).prop('selected',true);
 		$('#ciudad').prop('disabled', false);
-		$('#ciudad option').eq(0).prop('selected',true);
+		loadCiudades();
 	});
 	
 	$('#filtroProvincia').click(function(){
@@ -149,6 +107,7 @@ $(document).ready(function(){
 		$('#provincia').prop('disabled', false);
 		$('#ciudad').prop('disabled', true);
 		$('#ciudad option').eq(0).prop('selected',true);
+		loadProvincias();
 	});
 	
 	$('#ruta').change(function(){
@@ -210,4 +169,118 @@ function resetBuscadorAeropuertoFields () {
 	$('#ciudad option').eq(0).prop('selected',true);
 	$('#provincia').prop('disabled', true);
 	$('#ciudad').prop('disabled', false);
+}
+
+function loadCiudades () {
+	$.ajax({
+		beforeSend: function () {
+			mostrarDialogoCarga();
+		},
+		data: {
+			requestType: 'ciudadSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#ciudad').children('option').remove();
+		$('#ciudad').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			var ciudad = this.nombre_ciudad + ' (' + this.nombre_provincia + ')';
+			$('#ciudad').append(makeOption(this.id_ciudad, ciudad));
+		});
+		$('#cargando').dialog('close');
+	});
+}
+
+function loadProvincias () {
+	$.ajax({
+		beforeSend: function () {
+			mostrarDialogoCarga();
+		},
+		data: {
+			requestType: 'provinciaSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#provincia').children('option').remove();
+		$('#provincia').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			$('#provincia').append(makeOption(this.id_provincia, this.nombre));
+		});
+		$('#cargando').dialog('close');
+	});
+}
+
+function loadCiudadByProvincia (id_provincia) {
+	$.ajax({
+		beforeSend: function () {
+			mostrarDialogoCarga();
+		},
+		data: {
+			idProvincia : id_provincia,
+			requestType: 'ciudadByProvinciaSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#ciudad').children('option').remove();
+		$('#ciudad').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			$('#ciudad').append(makeOption(this.id_ciudad, this.nombre));
+		});
+		$('#cargando').dialog('close');
+	});
+}
+
+function mostrarDialogoAeropuerto (event) {
+	$('#dialogBuscarAeropuerto').dialog({
+		buttons: [{
+			text: 'Aceptar',
+			click: function(){
+				if ($('#formBuscarAeropuerto').valid()) {
+					var idBoton = $(event.target).prop('id');
+					var texto = '';
+					
+					if ($('#filtroCiudad').prop('checked') == true) {
+						texto = $('#ciudad option:selected').text();
+					} else {
+						texto = $('#ciudad option:selected').text() + ' (' + $('#provincia option:selected').text() + ')';
+					}
+					
+					if (idBoton == 'buscarDestino') {
+						$('#destino').val(texto);
+						$('#destino_hidden').val($('#ciudad option:selected').val());
+						$('#destino').valid();
+					} else {
+						$('#origen').val(texto);
+						$('#origen_hidden').val($('#ciudad option:selected').val());
+						$('#origen').valid();
+					}
+					
+					if ($('#destino').val() != '' && $('#origen').val() != '') {
+						$('#divRuta').show();
+					}
+					
+					$(this).dialog('close');
+				}
+			},
+			open: function () {
+				loadCiudades();
+			}
+		},{
+			text: 'Cancelar',
+			click: function(){
+				$(this).dialog('close');
+			}
+		}],
+		modal: true,
+		width: 750
+	});
 }

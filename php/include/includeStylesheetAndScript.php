@@ -4,4 +4,5 @@
 	echo('<script type="text/javascript" src="../js/common/jquery-1.11.1.min.js"></script>'."\n");
 	echo('<script type="text/javascript" src="../js/common/jquery.validate.js"></script>'."\n");
 	echo('<script type="text/javascript" src="../js/common/jquery-ui.min.js"></script>'."\n");
+	echo('<script type="text/javascript" src="../js/common/commonFunctions.js"></script>'."\n");
 ?>

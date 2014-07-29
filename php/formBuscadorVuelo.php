@@ -18,11 +18,11 @@
 					<div class="busca_vuelo">Buscador de Vuelo</div>
 					<div class="busca_vue">
 						<div class="destino">
-							<label class="nombreItem">Destino:</label>&nbsp;<textarea id="destino" name="destino" maxlength="128" readonly></textarea>&nbsp;
+							<label class="nombreItem">Destino:</label><br><input type="text" id="destino" name="destino" maxlength="128" readonly></textarea>&nbsp;
 							<input type="button" id="buscarDestino" name="buscarDestino" value="Buscar Destino"/>
 						</div>
 						<div class="origen">
-							<label class="nombreItem">Origen:</label>&nbsp;<textarea id="origen" name="origen" maxlength="128" readonly></textarea>&nbsp;
+							<label class="nombreItem">Origen:</label><br><input type="text" id="origen" name="origen" maxlength="128" readonly></textarea>&nbsp;
 							<input type="button" id="buscarOrigen" name="buscarOrigen" value="Buscar Origen"/>
 						</div>
 						<div id="divRuta">
@@ -84,6 +84,9 @@
 						 </select>
 					</div>
 				</form>
+			</div>
+			<div id="cargando" title="Cargando...">
+				Espere por favor...
 			</div>
 		</div>
 	</body>
