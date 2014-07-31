@@ -17,21 +17,31 @@
 				<div class="encabezado">
 					<div class="busca_vuelo">Buscador de Vuelo</div>
 					<div class="busca_vue">
-						<div class="destino">
-							<label class="nombreItem">Destino:</label><br><input type="text" id="destino" name="destino" maxlength="128" readonly></textarea>&nbsp;
-							<input type="button" id="buscarDestino" name="buscarDestino" value="Buscar Destino"/>
-						</div>
 						<div class="origen">
 							<label class="nombreItem">Origen:</label><br><input type="text" id="origen" name="origen" maxlength="128" readonly></textarea>&nbsp;
 							<input type="button" id="buscarOrigen" name="buscarOrigen" value="Buscar Origen"/>
 						</div>
+						<div class="destino">
+							<label class="nombreItem">Destino:</label><br><input type="text" id="destino" name="destino" maxlength="128" readonly></textarea>&nbsp;
+							<input type="button" id="buscarDestino" name="buscarDestino" value="Buscar Destino"/>
+						</div>
 						<div id="divRuta">
-							<label class="nombreItem">Rutas disponibles:</label>
-							<select id="ruta" name="ruta">
+							<table id="tablaVuelos">
+								<thead>
+									<tr>
+										<th class="columnaVuelo">Lugar de Partida</th>
+										<th class="columnaVuelo">Lugar de Arrivo</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<div id="divClase">
+							<label class="nombreItem">Clase:</label>
+							<select id="clase">
 								<option value="" selected>Seleccione...</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>		
 							</select>
 						</div>
 						<div id="circuito">
@@ -52,8 +62,10 @@
 							<input id="logIn" type="button" value="Consultar Reserva"/>
 						</div>
 						<div>
-							<input id="destino_hidden" name="destino_hidden" value="ABCD" type="hidden">
-							<input id="origen_hidden" name="origen_hidden" value="ABCD" type="hidden">
+							<input id="destino_hidden" name="destino_hidden" value="" type="hidden">
+							<input id="origen_hidden" name="origen_hidden" value="" type="hidden">
+							<input id="vuelo" name="vuelo" value="" type="hidden">
+							<input id="clase" name="clase" value="" type="hidden">
 						</div>
 					</div>
 				</div>
@@ -68,19 +80,13 @@
 					<div id="divPcia">
 						<label class="nombreItem">Provincia:</label>
 						<select id="provincia" name="provincia">
-							 <option value="" selected>Seleccione...</option>
-							 <option>1</option>
-							 <option>2</option>
-							 <option>3</option>									 
+							 <option value="" selected>Seleccione...</option>							 
 						 </select>
 					</div>
 					<div class="ciudad">
 						<label class="nombreItem">Ciudad:</label>
 						<select disabled id="ciudad" name="ciudad">
 							 <option value="" selected>Seleccione...</option>
-							 <option>1</option>
-							 <option>2</option>
-							 <option>3</option>
 						 </select>
 					</div>
 				</form>

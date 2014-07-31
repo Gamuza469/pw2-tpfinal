@@ -10,6 +10,7 @@ function mostrarDialogoCarga () {
 	$('#cargando').dialog({
 		close: function () {
 			return false;
-		}
+		},
+		modal: true
 	});
 }

@@ -7,6 +7,9 @@ $(document).ready(function(){
 			origen: {
 				required: true
 			},
+			clase: {
+				required: true
+			},
 			fechaPartida: {
 				required: true
 			},
@@ -20,6 +23,7 @@ $(document).ready(function(){
 		messages: {
 			destino: 'Ingrese el destino.',
 			origen:	'Ingrese el origen.',
+			clase: 'Especifique la clase deseada.',
 			fechaPartida: 'Especifique la fecha de partida.',
 			fechaRegreso: 'Especifique la fecha de regreso.',
 			idaVuelta: 'Especifique la ruta del vuelo.'
@@ -110,7 +114,7 @@ $(document).ready(function(){
 		loadProvincias();
 	});
 	
-	$('#ruta').change(function(){
+	$('#clase').change(function(){
 		if ($(this).children('option').eq(0).prop('selected') == false) {
 			$('#circuito').show();
 			$('#ida, #vuelta').prop('disabled', false);
@@ -265,7 +269,7 @@ function mostrarDialogoAeropuerto (event) {
 					}
 					
 					if ($('#destino').val() != '' && $('#origen').val() != '') {
-						$('#divRuta').show();
+						loadListaVuelos($('#origen_hidden').val(), $('#destino_hidden').val());
 					}
 					
 					$(this).dialog('close');
@@ -282,5 +286,71 @@ function mostrarDialogoAeropuerto (event) {
 		}],
 		modal: true,
 		width: 750
+	});
+}
+
+function loadListaVuelos (origen, destino) {
+	$.ajax({
+		data: {
+			origen: origen,
+			destino: destino,
+			requestType: 'vuelosByOrigenDestinoSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#tablaVuelos tbody').children().remove();
+		
+		if (!$.isEmptyObject(data.respuesta)) {
+			$('#divRuta').show();
+		} else {
+			$('#divRuta').hide();
+		}
+		
+		$(data.respuesta).each(function(){
+			$('#tablaVuelos tbody').append('<tr></tr>').append(
+				'<td>' +
+					this.aeropuerto_origen + ',<br>' +
+					this.ciudad_origen + ' (' + this.provincia_origen + ')' +
+				'</td><td>' +
+					this.aeropuerto_destino + ',<br>' +
+					this.ciudad_destino + ' (' + this.provincia_destino + ')' +
+				'</td>' +
+				'<td>' +
+					'<input type="button" id="' + this.numero_vuelo + '" value="Seleccionar\nvuelo" />' +
+				'</td>'
+			);
+			
+			$('#tablaVuelos').find('input[type="button"]').each(function(){
+				$('#tablaVuelos tbody tr').css('background-color', '');
+				$(this).click(function(){
+					$(this).parent().parent().css('background-color', 'blue');
+					$('#vuelo').val($(this).prop('id'));
+					$('#divClase').show();
+					loadClasesVuelo($(this).prop('id'));
+				});
+			});
+		});
+	});
+}
+
+function loadClasesVuelo (numeroVuelo) {
+	$.ajax({
+		data: {
+			numeroVuelo: numeroVuelo,
+			requestType: 'clasesByVueloSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#clase').children('option').remove();
+		$('#clase').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			$('#clase').append(makeOption(this.id_clase_vuelo, this.nombre + ' (Precio: $' + this.precio + ')'));
+		});
 	});
 }

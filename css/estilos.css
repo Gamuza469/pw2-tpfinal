@@ -38,7 +38,7 @@ body{
 #servicios, #nro_tarj, #nro_ident, #nro_cuenta,
 #efect, #dialogBuscarAeropuerto, #divPcia, #divRuta,
 #circuito, #fecha_partida, #fecha_regreso, #botonVerifica,
-#divCancelarReserva, #cargando {
+#divCancelarReserva, #cargando, #divClase {
 	display: none;
 }
 
@@ -51,4 +51,18 @@ table, tr, td {
 td {
 	width: 40px;
 	height: 40px;
+}
+
+#tablaVuelos {
+	margin-left: auto;
+	margin-right: auto;
+	width: 550px;
+}
+
+.columnaVuelo {
+	width: 200px;
+}
+
+#origen, #destino {
+	width: 320px;
 }

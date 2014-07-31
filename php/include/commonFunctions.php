@@ -76,7 +76,6 @@
 					}
 					$jsonString = $jsonString.']}';
 					echo $jsonString;
-					//echo $resultadoConsulta;
 				} else {
 					echo('La consulta a la base de datos ha fallado.<br>'."\n");
 					return false;
