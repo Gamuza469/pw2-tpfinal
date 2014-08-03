@@ -55,8 +55,8 @@
 				
 				/*---------------------------------------------------------------------------------*/
 				
-				if (!empty($_POST["formaPago"])) {
-					$formaPago = $_POST["formaPago"];
+				if (!empty($_POST["formaPagoComun"])) {
+					$formaPago = $_POST["formaPagoComun"];
 				} else {
 					$error = true;
 				}

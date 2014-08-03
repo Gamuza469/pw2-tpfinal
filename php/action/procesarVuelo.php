@@ -2,17 +2,19 @@
 	require_once('../include/commonFunctions.php');
 	
 	$error = false;
-	$destino = '';
-	$origen = '';
+	
+	$clase = '';
+	$vuelo = '';
 	$fechaPartida = '';
 	$fechaRegreso = '';
 	$idaVuelta = '';
 	$mensajeError = '';
 	
 	if (isset($_POST["submit"])) {
-		if (!empty($_POST["destino_hidden"])) {
-			$destino = $_POST["destino_hidden"];
-			if (preg_match('/[A-Z]{4,4}/', $destino) === 0) {
+		
+		if (!empty($_POST["vuelo"])) {
+			$vuelo = $_POST["vuelo"];
+			if (preg_match('/\d+/', $vuelo) === 0) {
 				$error = true;
 			}
 		} else {
@@ -20,15 +22,15 @@
 		}
 		
 		if ($error == true) {
-			$mensajeError = $mensajeError.'Destino inv&aacute;lido.<br>'."\n";
+			$mensajeError = $mensajeError.'Vuelo inv&aacute;lido.<br>'."\n";
 			$error = false;
 		}
 		
 		/*---------------------------------------------------------------------------------*/
 		
-		if (!empty($_POST["origen_hidden"])) {
-			$origen = $_POST["origen_hidden"];
-			if (preg_match('/[A-Z]{4,4}/', $origen) === 0) {
+		if (!empty($_POST["claseHidden"])) {
+			$clase = $_POST["claseHidden"];
+			if (preg_match('/\d+/', $clase) === 0) {
 				$error = true;
 			}
 		} else {
@@ -36,7 +38,7 @@
 		}
 		
 		if ($error == true) {
-			$mensajeError = $mensajeError.'Origen inv&aacute;lido.<br>'."\n";
+			$mensajeError = $mensajeError.'Clase inv&aacute;lida.<br>'."\n";
 			$error = false;
 		}
 		
@@ -66,7 +68,7 @@
 				$error = true;
 			} else {
 				if ($idaVuelta == 'vuelta') {
-					$idaVuelta = true;
+					$idaVuelta = 1;
 					/*---------------------------------------------------------------------------------*/
 					if (!empty($_POST["fechaRegreso"])) {
 						$fechaRegreso = $_POST["fechaRegreso"];
@@ -85,7 +87,7 @@
 					}
 					/*---------------------------------------------------------------------------------*/
 				} else {
-					$idaVuelta = false;
+					$idaVuelta = 0;
 				}
 			}
 		} else {
@@ -107,13 +109,13 @@
 	}
 	
 	if ($error == false) {
-		//Revisar ruta en base de datos
-		//Revisar formato fecha y disponibilidad contra frecuencia en base de datos
-		//Revisar formato fecha y disponibilidad contra frecuencia en base de datos
-		//conectar a la base, verificar y salvar
+		session_start();
+		$_SESSION['vuelo'] = $vuelo;
+		$_SESSION['clase'] = $clase;
+		$_SESSION['fechaPartida'] = $fechaPartida;
+		$_SESSION['fechaRegreso'] = $fechaRegreso;
+		$_SESSION['idaVuelta'] = $idaVuelta;
 		
-		//Persistir datos de usuario en sesión
-		//Persistir datos del sistema en cookies
 		header("Location: ../formRegistroUsuario.php");
 	} else {
 		//Enviar mensaje de error mediante sesión

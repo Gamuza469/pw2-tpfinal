@@ -106,6 +106,8 @@ CREATE TABLE medio_pago (
 CREATE TABLE tipo_pago (
 	id_tipo_pago				INTEGER		AUTO_INCREMENT,
 	nombre						VARCHAR(32),
+	cuotas						INTEGER,
+	interes						INTEGER,
 	PRIMARY KEY (`id_tipo_pago`)
 );
 

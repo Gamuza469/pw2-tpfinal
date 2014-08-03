@@ -66,3 +66,9 @@ td {
 #origen, #destino {
 	width: 320px;
 }
+
+#datosVuelo {
+	margin-left: auto;
+	margin-right: auto;
+	width: 550px;
+}

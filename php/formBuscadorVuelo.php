@@ -4,6 +4,8 @@
 			//Lógica principal
 			//Lógica de sesión
 			//Manejo de errores
+			session_start();
+			session_destroy();
 		?>
 		<title>.:: Buscador de Vuelo ::.</title>
 		<?php
@@ -65,7 +67,7 @@
 							<input id="destino_hidden" name="destino_hidden" value="" type="hidden">
 							<input id="origen_hidden" name="origen_hidden" value="" type="hidden">
 							<input id="vuelo" name="vuelo" value="" type="hidden">
-							<input id="clase" name="clase" value="" type="hidden">
+							<input id="claseHidden" name="claseHidden" value="" type="hidden">
 						</div>
 					</div>
 				</div>

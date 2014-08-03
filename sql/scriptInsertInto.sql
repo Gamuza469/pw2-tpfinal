@@ -519,21 +519,27 @@ INSERT INTO vuelo (codigo_oaci_origen, codigo_oaci_destino, codigo_avion, frecue
 ;
 
 INSERT INTO banco (nombre) VALUES
-	('Santander Río'),
-	('ICBC'),
-	('HSBC'),
-	('Supervielle'),
-	('Nación')
+	('Sin banco'),
+	('Banco Frances BBVA'),
+	('Banco Santander Río'),
+	('Banco Provincia'),
+	('Banco Patagonia'),
+	('Banco Itau'),
+	('Banco ICBC'),
+	('Banco HSBC'),
+	('Banco Supervielle'),
+	('Banco de la Nación Argentina')
 ;
 
 INSERT INTO empresa_medio_pago (nombre) VALUES
-	('American Express'),
+	('Sin empresa'),
 	('VISA'),
 	('MasterCard'),
-	('Tarjeta Naranja'),
+	('American Express'),
 	('Cabal'),
-	('Pago Mis Cuentas'),
 	('Pago Fácil'),
+	('RapiPago'),
+	('Pago Mis Cuentas'),
 	('Bapro Pagos')
 ;
 
@@ -546,17 +552,17 @@ INSERT INTO medio_pago (codigo_medio_pago, nombre) VALUES
 	('TRAB','Transferencia bancaria')
 ;
 
-INSERT INTO tipo_pago (nombre) VALUES
-	('Contado'),
-	('2 (dos) cuotas'),
-	('2 (dos) cuotas sin interés'),
-	('3 (tres) cuotas'),
-	('3 (tres) cuotas sin interés'),
-	('6 (seis) cuotas'),
-	('6 (seis) cuotas sin interés'),
-	('12 (doce) cuotas'),
-	('12 (doce) cuotas sin interés'),
-	('24 (veinticuatro) cuotas')
+INSERT INTO tipo_pago (nombre, cuotas, interes) VALUES
+	('Contado', 1, 0),
+	('2 (dos) cuotas', 2, 500),
+	('2 (dos) cuotas sin interés', 2, 0),
+	('3 (tres) cuotas', 3, 1000),
+	('3 (tres) cuotas sin interés', 3, 0),
+	('6 (seis) cuotas', 6, 1500),
+	('6 (seis) cuotas sin interés', 6, 0),
+	('12 (doce) cuotas', 12, 2000),
+	('12 (doce) cuotas sin interés', 12, 0),
+	('24 (veinticuatro) cuotas', 24, 3500)
 ;
 
 /* INSERT Nivel 5 */
@@ -1083,10 +1089,142 @@ INSERT INTO clase_vuelo (numero_vuelo, id_nombre_clase, precio) VALUES
 	((SELECT numero_vuelo FROM vuelo WHERE codigo_oaci_origen = 'SACO' AND codigo_oaci_destino = 'SAHZ' AND codigo_avion = 2 AND frecuencia = 'JVS'),(SELECT id_nombre_clase FROM nombre_clase WHERE nombre = 'Clase económica'),1347)
 ;
 
+/*
 INSERT INTO forma_pago (id_banco, id_empresa_medio_pago, codigo_medio_pago, id_tipo_pago) VALUES
 	((SELECT id_banco FROM banco WHERE nombre = 'Supervielle'),(SELECT id_empresa_medio_pago FROM empresa_medio_pago WHERE nombre = 'Visa'),(SELECT codigo_medio_pago FROM medio_pago WHERE nombre = 'Tarjeta de crédito'),(SELECT id_tipo_pago FROM tipo_pago WHERE nombre = '12 (doce) cuotas sin interés'))
 ;
+*/
 
+/*INSERT INTO `forma_pago` (`id_banco`, `id_empresa_medio_pago`, `codigo_medio_pago`, `id_tipo_pago`) VALUES
+	(1, 7, 'PAGT', 1),
+	(2, 1, 'TRAB', 1),
+	(4, 2, 'TARC', 9)
+;*/
+
+INSERT INTO forma_pago (id_banco, id_empresa_medio_pago, codigo_medio_pago, id_tipo_pago) VALUES
+
+-- bancos
+-- Credito con todos los bancos
+
+	(2, 2, 'TARC', 8),    -- Banco1 Visa Crédito 12cuotas c/ int
+	(2, 3, 'TARC', 7),    -- Banco1 Master Crédito 6cuotas s/ int
+	(2, 4, 'TARC', 6),    -- Banco1 American Crédito 6cuotas c/ int
+	(2, 5, 'TARC', 5),    -- Banco1 Cabal Crédito 3cuotas S / int
+	(3, 2, 'TARC', 8),    -- y asi para todos los demas bancos...
+	(3, 3, 'TARC', 7),     
+	(3, 4, 'TARC', 6),     
+	(3, 5, 'TARC', 5),     
+	(4, 2, 'TARC', 8),     
+	(4, 3, 'TARC', 7),     
+	(4, 4, 'TARC', 6),     
+	(4, 5, 'TARC', 5),     
+	(5, 2, 'TARC', 8),     
+	(5, 3, 'TARC', 7),     
+	(5, 4, 'TARC', 6),     
+	(5, 5, 'TARC', 5),     
+	(6, 2, 'TARC', 8),     
+	(6, 3, 'TARC', 7),     
+	(6, 4, 'TARC', 6),     
+	(6, 5, 'TARC', 5),     
+	(7, 2, 'TARC', 8),     
+	(7, 3, 'TARC', 7),     
+	(7, 4, 'TARC', 6),     
+	(7, 5, 'TARC', 5),     
+
+-- Débito con todos los bancos
+
+	(2, 2, 'TARD', 1),    -- Banco1 Visa Débito contado
+	(2, 3, 'TARD', 1),    -- Banco1 MasterCard Débito contado
+	(2, 4, 'TARD', 1),    -- Banco1 American Débito contado
+	(2, 5, 'TARD', 1),    -- Banco1 Cabal Débito contado
+	(3, 2, 'TARD', 1),    -- y asi para todos los demas bancos...
+	(3, 3, 'TARD', 1),     
+	(3, 4, 'TARD', 1),     
+	(3, 5, 'TARD', 1),     
+	(4, 2, 'TARD', 1),     
+	(4, 3, 'TARD', 1),     
+	(4, 4, 'TARD', 1),     
+	(4, 5, 'TARD', 1),     
+	(5, 2, 'TARD', 1),     
+	(5, 3, 'TARD', 1),     
+	(5, 4, 'TARD', 1),     
+	(5, 5, 'TARD', 1),     
+	(6, 2, 'TARD', 1),     
+	(6, 3, 'TARD', 1),     
+	(6, 4, 'TARD', 1),     
+	(6, 5, 'TARD', 1),     
+	(7, 2, 'TARD', 1),     
+	(7, 3, 'TARD', 1),     
+	(7, 4, 'TARD', 1),     
+	(7, 5, 'TARD', 1),     
+	(8, 2, 'TARD', 1),     
+	(8, 3, 'TARD', 1),     
+	(8, 4, 'TARD', 1),     
+	(8, 5, 'TARD', 1),     
+	(9, 2, 'TARD', 1),     
+	(9, 3, 'TARD', 1),     
+	(9, 4, 'TARD', 1),     
+	(9, 5, 'TARD', 1),     
+
+/*pago tercerizado*/
+
+	(1, 6, 'PAGT', 1),     
+	(1, 7, 'PAGT', 1),     
+	(1, 9, 'PAGT', 1),     
+
+
+
+/*pago electrónico*/
+
+	(1, 8, 'PAGE', 1),     
+	(1, 8, 'PAGE', 1),     
+	(1, 8, 'PAGE', 1),     
+	(1, 8, 'PAGE', 1),     
+
+
+/*efvo*/
+
+	(1, 1, 'EFEC', 1),
+	(1, 6, 'EFEC', 1),
+	(1, 7, 'EFEC', 1),
+	(1, 9, 'EFEC', 1),
+
+
+/*transferencia con todos los bancos*/
+
+	(2, 2, 'TRAB', 1),     
+	(2, 3, 'TRAB', 1),     
+	(2, 4, 'TRAB', 1),     
+	(2, 5, 'TRAB', 1),     
+	(3, 2, 'TRAB', 1),     
+	(3, 3, 'TRAB', 1),     
+	(3, 4, 'TRAB', 1),     
+	(3, 5, 'TRAB', 1),     
+	(4, 2, 'TRAB', 1),     
+	(4, 3, 'TRAB', 1),     
+	(4, 4, 'TRAB', 1),     
+	(4, 5, 'TRAB', 1),     
+	(5, 2, 'TRAB', 1),     
+	(5, 3, 'TRAB', 1),     
+	(5, 4, 'TRAB', 1),     
+	(5, 5, 'TRAB', 1),     
+	(6, 2, 'TRAB', 1),     
+	(6, 3, 'TRAB', 1),     
+	(6, 4, 'TRAB', 1),     
+	(6, 5, 'TRAB', 1),     
+	(7, 2, 'TRAB', 1),     
+	(7, 3, 'TRAB', 1),     
+	(7, 4, 'TRAB', 1),     
+	(7, 5, 'TRAB', 1),     
+	(8, 2, 'TRAB', 1),     
+	(8, 3, 'TRAB', 1),     
+	(8, 4, 'TRAB', 1),     
+	(8, 5, 'TRAB', 1),     
+	(9, 2, 'TRAB', 1),     
+	(9, 3, 'TRAB', 1),     
+	(9, 4, 'TRAB', 1),     
+	(9, 5, 'TRAB', 1)     
+;
 
 /* Tabla PASAJERO no necesita insertar registros */
 

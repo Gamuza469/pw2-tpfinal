@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	loadMontoOriginal();
 	$('#formPagoPasaje').validate({
 		rules: {
 			medioPago: {
@@ -10,13 +11,17 @@ $(document).ready(function(){
 		}
 	});
 	
+	loadMediosPago();
+	
 	$('#medioPago').change(function(){
 		resetAllFields();
 		removeAllRules();
+		loadMontoOriginal();
 		
 		var medioPago = $(this).children('option:selected').val();
 		if (medioPago == 'TARC' || medioPago == 'TARD') {
 			addTarjetaRules();
+			loadBancos(medioPago);
 			$('#bancos').show();
 			$('#cia_emisora').show();
 			$('#formas_pago').show();
@@ -25,14 +30,17 @@ $(document).ready(function(){
 			$('#banco').prop('disabled', false);
 		} else if (medioPago == 'PAGT' || medioPago == 'PAGE') {
 			addServicioRules();
+			loadServicios(medioPago);
 			$('#servicios').show();
 			$('#servicio').prop('disabled', false);
 		} else if (medioPago == 'TRAB') {
 			addTransferenciaRules();
+			loadBancos(medioPago);
 			$('#bancos').show();
 			$('#nro_cuenta').show();
 			$('#banco').prop('disabled', false);
 		} else if (medioPago == 'EFEC') {
+			loadTipoPagoEfectivo(medioPago);
 			$('#efect').show();
 		}
 	});
@@ -40,6 +48,7 @@ $(document).ready(function(){
 	$('#banco').change(function(){
 		var medioPago = $('#medioPago').children('option:selected').val();
 		if (medioPago == 'TARC' || medioPago == 'TARD') {
+			loadEmpresas(medioPago, $(this).val());
 			$('#emisor option').eq(0).prop('selected', true);
 			$('#formaPago option').eq(0).prop('selected', true);
 			$('#nroTarjeta').val('');
@@ -51,12 +60,14 @@ $(document).ready(function(){
 				
 			$('#emisor').prop('disabled', false);
 		} else {
+			loadFormaPagoByBanco(medioPago, $(this).val());
 			$('#nroCuenta').prop('disabled', false);
 		}
 		
 	});
 	
 	$('#emisor').change(function(){
+		loadTipoPago($('#medioPago').val(), $('#banco').val(), $(this).val());
 		$('#formaPago option').eq(0).prop('selected', true);
 		$('#nroTarjeta').val('');
 		$('#nroIdentificador').val('');
@@ -68,8 +79,14 @@ $(document).ready(function(){
 	});
 	
 	$('#formaPago').change(function(){
+		loadFormaPago($('#medioPago').val(), $('#banco').val(), $('#emisor').val(), $(this).val());
+		setFormaPago($(this).val());
 		$('#nroTarjeta').prop('disabled', false);
 		$('#nroIdentificador').prop('disabled', false);
+	});
+	
+	$('#servicio').change(function(){
+		loadFormaPagoByServicio($('#medioPago').val(), $(this).val());
 	});
 });
 
@@ -186,4 +203,202 @@ function addTransferenciaRules () {
 			minlength: 'Por favor ingrese los 22 (veintidos) d&iacute;gitos de su C.B.U..'
 		}
 	});
+}
+
+function loadMediosPago () {
+	$.ajax({
+		data: {
+			requestType: 'medioPagoSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#medioPago').children('option').remove();
+		$('#medioPago').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			$('#medioPago').append(makeOption(this.codigo_medio_pago, this.nombre));
+		});
+	});
+}
+
+function loadBancos (medioPago) {
+	$.ajax({
+		data: {
+			medioPago: medioPago,
+			requestType: 'bancosByMedioPagoSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#banco').children('option').remove();
+		$('#banco').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			$('#banco').append(makeOption(this.id_banco, this.nombre_banco));
+		});
+	});
+}
+
+function loadEmpresas (medioPago, banco) {
+	$.ajax({
+		data: {
+			banco: banco,
+			medioPago: medioPago,
+			requestType: 'empresasByBancoAndMedioPagoSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#emisor').children('option').remove();
+		$('#emisor').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			$('#emisor').append(makeOption(this.id_empresa_medio_pago, this.nombre_empresa));
+		});
+	});
+}
+
+function loadTipoPago (medioPago, banco, empresa) {
+	$.ajax({
+		data: {
+			banco: banco,
+			empresa: empresa,
+			medioPago: medioPago,
+			requestType: 'tipoPagoByEmpresaAndBancoAndMedioPagoSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#formaPago').children('option').remove();
+		$('#formaPago').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			$('#formaPago').append(makeOption(this.id_tipo_pago, this.nombre_tipo));
+		});
+	});
+}
+
+function loadServicios (medioPago) {
+	$.ajax({
+		data: {
+			medioPago: medioPago,
+			requestType: 'empresasByMedioPagoSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#servicio').children('option').remove();
+		$('#servicio').append(createEmptyOption());
+		$(data.respuesta).each(function(){
+			$('#servicio').append(makeOption(this.id_empresa_medio_pago, this.nombre_empresa));
+		});
+	});
+}
+
+function loadMontoOriginal () {
+	if ($('#monto').val() != $('#montoOriginal').val()) {
+		$('#monto').val('$ ' + $('#montoOriginal').val()); 
+	}
+}
+
+function loadFormaPagoByBanco (medioPago, banco) {
+	$.ajax({
+		data: {
+			banco: banco,
+			medioPago: medioPago,
+			requestType: 'tipoPagoByBancoSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		calculateTotalFee(data.respuesta[0].interes, data.respuesta[0].cuotas);
+		setFormaPago(data.respuesta[0].id_forma_pago);
+	});
+}
+
+function loadFormaPagoByServicio (medioPago, empresa) {
+	$.ajax({
+		data: {
+			empresa: empresa,
+			medioPago: medioPago,
+			requestType: 'tipoPagoByEmpresaSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		calculateTotalFee(data.respuesta[0].interes, data.respuesta[0].cuotas);
+		setFormaPago(data.respuesta[0].id_forma_pago);
+	});
+}
+
+function calculateTotalFee (interes, cuotas) {
+	var montoFinal;
+	var valorCuota;
+	
+	var stringMonto = '';
+	
+	montoFinal = parseFloat($('#montoOriginal').val());
+	cuotas = parseInt(cuotas, 10);
+	interes = parseInt(interes, 10);
+	
+	if (interes > 0) {
+		interes = 1 + (interes / 100);
+		montoFinal = (montoFinal * interes);
+	}
+	
+	if (cuotas > 1) {
+		montoFinal = montoFinal / cuotas;
+		stringMonto += cuotas.toString() + ' cuotas de '
+	}
+	
+	$('#monto').val(stringMonto + '$ ' + montoFinal.toFixed(2));
+}
+
+function loadFormaPago (medioPago, banco, empresa, tipoPago) {
+	$.ajax({
+		data: {
+			banco: banco,
+			empresa: empresa,
+			medioPago: medioPago,
+			requestType: 'formaPagoByMedioPagoBancoEmpresaTipoSelect',
+			tipoPago: tipoPago,
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		calculateTotalFee(data.respuesta[0].interes, data.respuesta[0].cuotas);
+		setFormaPago(data.respuesta[0].id_forma_pago);
+	});
+}
+
+function loadTipoPagoEfectivo (medioPago) {
+	$.ajax({
+		data: {
+			medioPago: medioPago,
+			requestType: 'tipoPagoEfectivoSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		setFormaPago(data.respuesta[0].id_forma_pago);
+	});
+}
+
+function setFormaPago (idFormaPago) {
+	$('#formaPagoComun').val(idFormaPago);
 }

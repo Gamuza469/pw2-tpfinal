@@ -31,9 +31,21 @@
 						<div>
 							Se utilizar&aacute;n su DNI y c&oacute;digo de reserva para identificarlo en el sistema en pasos posteriores.
 						</div>
+						<div>
+							<table id="datosVuelo">
+								<thead>
+									<tr>
+										<th colspan="2">Datos de su viaje</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
 						<BR>
 						<div class="boton">
-							<div class="reserva"><input name="submit" type="submit" value="Registrar Usuario"/><input type="reset" value="Borrar Datos"/></div>
+							<div class="reserva"><input name="submit" type="submit" value="Registrar datos y reservar pasaje"/><input type="reset" value="Borrar Datos"/></div>
+							<br><hr>
 							<input id="cancelarReserva" type="button" value="Cancelar Reserva"/>
 						</div>
 						<div id="divCancelarReserva" title="Cancelar reserva">
