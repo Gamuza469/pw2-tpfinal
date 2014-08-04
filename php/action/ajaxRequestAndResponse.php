@@ -3,6 +3,7 @@
 	
 	$showMessages = false;
 	$stringQuery = '';
+	$resultadoQuery = '';
 	
 	if (isset($_POST['verify']) && isset($_POST['requestType'])) {
 		if ($_POST['verify'] == 'valid') {
@@ -243,7 +244,7 @@
 						p.fecha_partida = '".formatDateARToUTC($_SESSION['fechaPartida'])."'"
 				;
 				
-				if ($_SESSION['fechaRegreso'] != '') {
+				if ($_SESSION['fechaRegreso'] != '' && $_SESSION['fechaRegreso'] != '0000-00-00') {
 					$stringQuery = $stringQuery." AND
 						p.fecha_regreso = '".formatDateARToUTC($_SESSION['fechaRegreso'])."'";
 				}
@@ -255,6 +256,7 @@
 						p.pagado,
 						p.checked_in,
 						p.fecha_partida,
+						p.numero_excedente,
 						po.nombre			
 					FROM
 						pasaje p
@@ -303,7 +305,8 @@
 						clase_vuelo cv ON
 						p.id_clase_vuelo = cv.id_clase_vuelo
 					WHERE
-						p.id_clase_vuelo =".$_SESSION['clase']
+						p.id_clase_vuelo =".$_SESSION['clase']." AND
+						p.fecha_partida = '".$_SESSION['fechaPartida']."'"
 				;
 			} else if ($_POST['requestType'] == 'claseVueloSelect') {
 				session_start();
@@ -315,11 +318,40 @@
 					WHERE
 						cv.id_clase_vuelo =".$_SESSION['clase']
 				;
+			} else if ($_POST['requestType'] == 'setVariablesPagoSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT
+						p.dni,
+						p.id_clase_vuelo AS clase_vuelo,
+						p.vuelta AS ida_vuelta,
+						p.fecha_reserva,
+						p.fecha_partida,
+						p.fecha_regreso,
+						p.numero_excedente
+					FROM
+						pasaje p
+					WHERE
+						p.id_pasaje = ".$_SESSION['codigoReserva']
+				;
 			}
 		}
 		//echo $stringQuery;
+		//var_dump($_SESSION);
 		if ($stringQuery != '') {
-			executeQuery($conexion, $stringQuery, $showMessages);
+			$resultadoQuery = executeQuery($conexion, $stringQuery, $showMessages);
+		}
+		
+		if ($_POST['requestType'] == 'setVariablesPagoSelect') {
+			$resultadoQuery = json_decode($resultadoQuery);
+			//var_dump($resultadoQuery);
+			$_SESSION['dni'] = $resultadoQuery->respuesta[0]->dni;
+			$_SESSION['clase'] = $resultadoQuery->respuesta[0]->clase_vuelo;
+			$_SESSION['idaVuelta'] = $resultadoQuery->respuesta[0]->ida_vuelta;
+			$_SESSION['fechaReserva'] = formatUTCDateToBSAS($resultadoQuery->respuesta[0]->fecha_reserva);
+			$_SESSION['fechaPartida'] = formatUTCDateToBSAS($resultadoQuery->respuesta[0]->fecha_partida);
+			$_SESSION['fechaRegreso'] = formatUTCDateToBSAS($resultadoQuery->respuesta[0]->fecha_regreso);
+			$_SESSION['listaEspera'] = $resultadoQuery->respuesta[0]->numero_excedente;
 		}
 	}
 ?>

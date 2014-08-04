@@ -10,14 +10,6 @@
 	- Mostrar asiento seleccionado correctamente (texto)
 	- Pantalla de 'Confirmar Reserva'
 	- Pantalla de 'Bienvenido, usuario'
-	- No calcula cuotas
-	- Desea confirmar reserva?
-	- Desea cancelar la busqueda? (y ver su reserva)
 	- Etc.
 + Persistencia
-	- Escritura de datos
-	- Verificación de datos (anterior Lectura/Escritura)
 	- Mapeo a sesión
-+ Base de Datos
-	- Formas de Pago (generar inserts/opciones)
-	- No registra cantidad cuotas

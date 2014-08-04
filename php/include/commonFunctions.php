@@ -82,6 +82,7 @@
 					}
 					$jsonString = $jsonString.']}';
 					echo $jsonString;
+					return $jsonString;
 				} else {
 					echo('La consulta a la base de datos ha fallado.<br>'."\n");
 					return false;

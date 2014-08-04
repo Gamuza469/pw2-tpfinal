@@ -57,22 +57,28 @@ function evaluarFechas (fechaInicial, fechaFinal, evaluarHoras) {
 		}
 	 }
 	 
-	 if (resultadoGeneral == '') {
-		if (resultadoDia != 'iguales') {
-			resultadoGeneral = (fechaInicialObject.getUTCDate() > fechaFinalObject.getUTCDate() ? 'mayor' : 'menor');
-		}
-		if (resultadoMes != 'iguales') {
-			resultadoGeneral = (fechaInicialObject.getUTCMonth() > fechaFinalObject.getUTCMonth() ? 'mayor' : 'menor');
-		}
-		if (resultadoAnio != 'iguales') {
-			resultadoGeneral = (fechaInicialObject.getUTCFullYear() > fechaFinalObject.getUTCFullYear() ? 'mayor' : 'menor');
-		}
-		if (evaluarHoras == true) {
-			resultadoGeneral = fechaInicialObject.getUTCHours() - fechaFinalObject.getUTCHours();
-		}
-	 }	 
+	
+	if (resultadoDia != 'iguales') {
+		resultadoGeneral = (fechaInicialObject.getUTCDate() > fechaFinalObject.getUTCDate() ? 'mayor' : 'menor');
+	}
+	if (resultadoMes != 'iguales') {
+		resultadoGeneral = (fechaInicialObject.getUTCMonth() > fechaFinalObject.getUTCMonth() ? 'mayor' : 'menor');
+	}
+	if (resultadoAnio != 'iguales') {
+		resultadoGeneral = (fechaInicialObject.getUTCFullYear() > fechaFinalObject.getUTCFullYear() ? 'mayor' : 'menor');
+	}
+	if (evaluarHoras == true) {
+		resultadoGeneral = fechaInicialObject.getUTCHours() - fechaFinalObject.getUTCHours();
+	}
 	 
 	 return resultadoGeneral;
+}
+
+function evaluarFechasDias (fechaInicial, fechaFinal) {
+	 var fechaInicialObject = new Date();
+	 var fechaFinalObject = fechaStringToDateObject(fechaFinal);
+	 
+	 return fechaFinalObject.getUTCDate() - fechaInicialObject.getUTCDate();
 }
 
 function formatUTCDateToBSAS (fecha) {

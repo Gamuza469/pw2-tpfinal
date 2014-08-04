@@ -170,11 +170,42 @@
 		;
 		executeQuery($conexion, $stringQuery, $showMessages);
 		
+		session_start();
+		
+		if (isset($_SESSION['listaEspera'])) {
+			$stringQuery = "
+				UPDATE
+					pasaje
+				SET
+					checked_in = -1
+				WHERE
+					id_pasaje = (
+						SELECT
+							p.id_pasaje
+						FROM
+							(
+								SELECT
+									p.id_pasaje
+								FROM
+									pasaje p
+								WHERE
+									p.id_clase_vuelo = ".$_SESSION['clase']." AND
+									p.checked_in != -1 AND
+									p.numero_excedente = 0 AND
+									p.fecha_partida = '".formatDateARToUTC($_SESSION['fechaPartida'])."'
+								ORDER BY
+									p.id_pasaje
+								LIMIT
+									1
+							) AS p
+					)
+			";
+			executeQuery($conexion, $stringQuery, $showMessages);
+		}
+		
 		//echo $stringQuery;
 		//var_dump($_POST);
 		header("Location: ../formPagoRealizado.php");
-		//Redirige a reserva vencida
-		//header("Location: ../formReservaVencida.php");
 	} else {
 		//var_dump($_POST);
 		//echo $mensajeError;
