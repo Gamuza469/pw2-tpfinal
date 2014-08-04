@@ -303,9 +303,33 @@ function loadServicios (medioPago) {
 }
 
 function loadMontoOriginal () {
-	if ($('#monto').val() != $('#montoOriginal').val()) {
-		$('#monto').val('$ ' + $('#montoOriginal').val()); 
-	}
+	$.ajax({
+		data: {
+			requestType: 'precioByClaseSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#montoOriginal').val(data.respuesta[0].precio);
+		$('#monto').val('$ ' + data.respuesta[0].precio);
+		loadCodigoReserva();
+	});
+}
+
+function loadCodigoReserva () {
+	$.ajax({
+		data: {
+			requestType: 'codigoReservaSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		$('#codigoReserva').val(data.respuesta[0].codigo_reserva);
+	});
 }
 
 function loadFormaPagoByBanco (medioPago, banco) {
@@ -380,7 +404,6 @@ function loadFormaPago (medioPago, banco, empresa, tipoPago) {
 		url: './action/ajaxRequestAndResponse.php'
 	}).done(function(data){
 		calculateTotalFee(data.respuesta[0].interes, data.respuesta[0].cuotas);
-		setFormaPago(data.respuesta[0].id_forma_pago);
 	});
 }
 

@@ -8,8 +8,6 @@
 	$dni = '';
 	$fechaNacimiento = '';
 	$email = '';
-	$password = '';
-	$confPassword = '';
 	
 	if (isset ($_POST["submit"])) {
 		if (!empty($_POST["nombre"])) {
@@ -112,7 +110,35 @@
 	}
 	
 	if ($error == false) {
-		//conectar a la base, verificar y salvar
+		session_start();
+		$conexion = checkDatabaseAccess();
+		$showMessages = false;
+		$stringQuery = "
+			INSERT INTO
+				pasajero
+					(dni, nombre, fecha_nacimiento, email)
+			VALUES
+				('".$_POST['dni']."', '".$_POST['apellido'].", ".$_POST['nombre']."', '".formatDateARToUTC($_POST['fechaNacimiento'])."', '".$_POST['email']."')
+		";
+		executeQuery($conexion, $stringQuery, $showMessages);
+		$fechaHoy = date("Y/m/d");
+		$stringQuery = "
+			INSERT INTO
+				pasaje
+					(dni, id_clase_vuelo, id_forma_pago, vuelta, fecha_reserva, fecha_partida, fecha_regreso, pagado, checked_in, numeroExcedente)
+			VALUES
+				('".$_POST['dni']."', ".$_SESSION['clase'].", 1, ".$_SESSION['idaVuelta'].",'".$fechaHoy."', '".formatDateARToUTC($_SESSION['fechaPartida'])."', '".formatDateARToUTC($_SESSION['fechaRegreso'])."', 0, 0, 0)
+		";
+		executeQuery($conexion, $stringQuery, $showMessages);
+		
+		$_SESSION['dni'] = $_POST['dni'];
+		$_SESSION['fechaReserva'] = str_replace('/', '-', $fechaHoy);
+		$_SESSION['fechaPartida'] = str_replace('/', '-', formatDateARToUTC($_SESSION['fechaPartida']));
+		
+		if ($_SESSION['fechaRegreso'] != '') {
+			$_SESSION['fechaRegreso'] = str_replace('/', '-', formatDateARToUTC($_SESSION['fechaRegreso']));
+		}
+		
 		header("Location: ../formPromptPago.php");		
 	} else {
 		//Enviar mensaje de error mediante sesión

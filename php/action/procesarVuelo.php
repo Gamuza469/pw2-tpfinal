@@ -48,8 +48,6 @@
 			$fechaPartida = $_POST["fechaPartida"];
 			if (preg_match('/\d{2,2}\/\d{2,2}\/\d{4,4}/', $fechaPartida) === 0) {
 				$error = true;
-			} else {
-				$fechaPartida = formatDateARToUTC($fechaPartida);
 			}
 		} else {
 			$error = true;
@@ -74,8 +72,6 @@
 						$fechaRegreso = $_POST["fechaRegreso"];
 						if (preg_match('/\d{2,2}\/\d{2,2}\/\d{4,4}/', $fechaRegreso) === 0) {
 							$error = true;
-						} else {
-							$fechaRegreso = formatDateARToUTC($fechaRegreso);
 						}
 					} else {
 						$error = true;

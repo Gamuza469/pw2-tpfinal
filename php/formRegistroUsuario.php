@@ -22,7 +22,7 @@
 							<label class="nombreItem">DNI:</label>&nbsp;<input type="text" id="dni" maxlength="8" name="dni"/>
 						</div>								
 						<div class="origen">
-							<label class="nombreItem">Fecha de Nacimiento:</label>&nbsp;<input type="text" id="fechaNacimiento" name="fechaNacimiento"/>
+							<label class="nombreItem">Fecha de Nacimiento:</label>&nbsp;<input type="text" id="fechaNacimiento" name="fechaNacimiento" readonly />
 						</div>
 						<div class="email">
 							<label class="nombreItem">E-Mail:</label>&nbsp;<input type="text" id="email" maxlength="256" name="email"/>

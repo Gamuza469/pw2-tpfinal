@@ -7,16 +7,14 @@
 	</head>
 	<body>
 		<div id="contenedor">
-			<form action="./action/despuesPagar.php" id="formPagoRealizado" method="post">
-				<div class="encabezado">
-					<div class="boarding_pass">Su pago ha sido registrado</div>
-					<div class="busca_vue">
-						<div class="boton">
-							<div class="imprime"><input type="submit" value="Cerrar" /><input id="close" type="button" value="Cerrar (sin PHP)" /><input id="check" type="button" value="Check-In" /></div>
-						</div>							
-					</div>
+			<div class="encabezado">
+				<div class="boarding_pass">Su pago ha sido registrado</div>
+				<div class="busca_vue">
+					<div class="boton">
+						<div class="imprime"><input id="close" type="button" value="Cerrar" /><input id="check" type="button" value="Realizar Check-In" /></div>
+					</div>							
 				</div>
-			</form>	
+			</div>
 		</div>
 		<script	type="text/javascript">
 			$(document).ready(function(){

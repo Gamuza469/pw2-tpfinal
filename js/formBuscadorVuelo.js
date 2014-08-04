@@ -138,7 +138,22 @@ $(document).ready(function(){
 	});
 	
 	$('#logIn').click(function(){
-		window.location.href = './formVerificarReserva.php';
+		$('#divCancelarBusqueda').dialog({
+			buttons: [{
+				text: 'Cancelar busqueda y consultar reserva',
+				click: function () {
+					window.location.href = './formVerificarReserva.php';
+					$(this).dialog('close');
+				}
+			},{
+				text: 'Continuar con la busqueda',
+				click: function () {
+					$(this).dialog('close');
+				}
+			}],
+			modal: true,
+			width: 750
+		});
 	});
 	
 	blockAndResetFields();

@@ -1,4 +1,6 @@
 <?php
+	require_once('../include/commonFunctions.php');
+	
 	$error = false;
 	$mensajeError = '';
 	$medioPago = '';
@@ -50,19 +52,6 @@
 				
 				if ($error == true) {
 					$mensajeError = $mensajeError.'Emisor inv&aacute;lido.<br>'."\n";
-					$error = false;
-				}
-				
-				/*---------------------------------------------------------------------------------*/
-				
-				if (!empty($_POST["formaPagoComun"])) {
-					$formaPago = $_POST["formaPagoComun"];
-				} else {
-					$error = true;
-				}
-				
-				if ($error == true) {
-					$mensajeError = $mensajeError.'Forma de pago inv&aacute;lida.<br>'."\n";
 					$error = false;
 				}
 				
@@ -136,11 +125,25 @@
 					$error = false;
 				}
 			}
+		
+			/*---------------------------------------------------------------------------------*/
+			
+			if (!empty($_POST["formaPagoComun"])) {
+				$formaPago = $_POST["formaPagoComun"];
+			} else {
+				$error = true;
+			}
+			
+			if ($error == true) {
+				$mensajeError = $mensajeError.'Forma de pago inv&aacute;lida.<br>'."\n";
+				$error = false;
+			}
+			
 		} else {
 			$error = true;
 			
 			if ($error == true) {
-				$mensajeError = $mensajeError.'888Circuito inv&aacute;lido.<br>'."\n";
+				$mensajeError = $mensajeError.'Medio de pago inv&aacute;lido.<br>'."\n";
 				$error = false;
 			}
 		}
@@ -158,6 +161,19 @@
 	
 	if ($error == false) {
 		//conectar a la base, verificar y salvar
+		$conexion = checkDatabaseAccess();
+		$showMessages = false;
+		$stringQuery = "
+			UPDATE
+				pasaje
+			SET
+				pagado = 1,
+				id_forma_pago = ".$_POST['formaPagoComun']."
+			WHERE
+				id_pasaje = ".$_POST['codigoReserva']
+		;
+		executeQuery($conexion, $stringQuery, $showMessages);
+		
 		header("Location: ../formPagoRealizado.php");
 		//Redirige a reserva vencida
 		//header("Location: ../formReservaVencida.php");

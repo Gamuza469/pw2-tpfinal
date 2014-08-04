@@ -38,7 +38,7 @@ body{
 #servicios, #nro_tarj, #nro_ident, #nro_cuenta,
 #efect, #dialogBuscarAeropuerto, #divPcia, #divRuta,
 #circuito, #fecha_partida, #fecha_regreso, #botonVerifica,
-#divCancelarReserva, #cargando, #divClase {
+#divCancelarReserva, #cargando, #divClase, #divCancelarBusqueda {
 	display: none;
 }
 

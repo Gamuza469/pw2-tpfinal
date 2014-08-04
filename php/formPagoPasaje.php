@@ -53,7 +53,8 @@
 							Deber&aacute; acercarse a nuestras oficinas con el fin de abonar el monto requerido.
 						</div>
 						<div>
-							<input type="hidden" id="montoOriginal" name="montoOriginal" value="2000.50"/>
+							<input type="hidden" id="codigoReserva" name="codigoReserva" value=""/>
+							<input type="hidden" id="montoOriginal" name="montoOriginal" value=""/>
 							<input type="hidden" id="formaPagoComun" name="formaPagoComun" value=""/>
 						</div>
 						<BR>

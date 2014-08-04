@@ -117,7 +117,6 @@ CREATE TABLE pasajero (
 	nombre				VARCHAR(512),
 	fecha_nacimiento	DATE,
 	email				VARCHAR(256),
-	password			VARCHAR(32),
 	PRIMARY KEY (`dni`)
 );
 
@@ -166,6 +165,9 @@ CREATE TABLE pasaje (
 	pagado				BOOLEAN,
 	checked_in			BOOLEAN,
 	fecha_reserva		DATE,
+	fecha_partida		DATE,
+	fecha_regreso		DATE,
+	numeroExcedente		INTEGER,
 	posicion			VARCHAR(6),
 	PRIMARY KEY (`id_pasaje`, `dni`, `id_clase_vuelo`, `id_forma_pago`),
 	FOREIGN KEY (`dni`)					REFERENCES `pasajero` (`dni`)
@@ -178,3 +180,8 @@ CREATE TABLE pasaje (
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
 );
+
+ALTER TABLE
+	pasaje
+	AUTO_INCREMENT=10000000
+;

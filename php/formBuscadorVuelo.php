@@ -1,9 +1,6 @@
 <html>
 	<head>
 		<?php
-			//Lógica principal
-			//Lógica de sesión
-			//Manejo de errores
 			session_start();
 			session_destroy();
 		?>
@@ -62,6 +59,9 @@
 							<div id="botonVerifica"><input name="submit" type="submit" value="Verificar" /></div>
 							<BR><hr>
 							<input id="logIn" type="button" value="Consultar Reserva"/>
+						</div>
+						<div id="divCancelarBusqueda" title="Cancelar busqueda">
+							&iquest;Desea cancelar la b&uacute;squeda?
 						</div>
 						<div>
 							<input id="destino_hidden" name="destino_hidden" value="" type="hidden">

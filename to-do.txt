@@ -1,23 +1,20 @@
 + Manejo de Sesiones
 	- Persistir la conexión actual
-	- Mantener al usuario conectado
 	- Mantener información del vuelo hasta reservar pasaje
 	- Desde el log-in, saber donde volver
 	- Manejo de errores
 	- Etc.
 + Interfaz
-	- Tilde 'Mantener conectado'
-	- Botón 'Desconectar' (donde?)
 	- Manejo de errores
 	- Modificación lógica de creación de mapa de asientos
 	- Mostrar asiento seleccionado correctamente (texto)
 	- Pantalla de 'Confirmar Reserva'
 	- Pantalla de 'Bienvenido, usuario'
-	- Mostrar lista de vuelos disponibles según selección
 	- No calcula cuotas
+	- Desea confirmar reserva?
+	- Desea cancelar la busqueda? (y ver su reserva)
 	- Etc.
 + Persistencia
-	- Lectura de datos
 	- Escritura de datos
 	- Verificación de datos (anterior Lectura/Escritura)
 	- Mapeo a sesión

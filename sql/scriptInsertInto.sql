@@ -554,15 +554,15 @@ INSERT INTO medio_pago (codigo_medio_pago, nombre) VALUES
 
 INSERT INTO tipo_pago (nombre, cuotas, interes) VALUES
 	('Contado', 1, 0),
-	('2 (dos) cuotas', 2, 500),
+	('2 (dos) cuotas', 2, 5),
 	('2 (dos) cuotas sin interés', 2, 0),
-	('3 (tres) cuotas', 3, 1000),
+	('3 (tres) cuotas', 3, 10),
 	('3 (tres) cuotas sin interés', 3, 0),
-	('6 (seis) cuotas', 6, 1500),
+	('6 (seis) cuotas', 6, 15),
 	('6 (seis) cuotas sin interés', 6, 0),
-	('12 (doce) cuotas', 12, 2000),
+	('12 (doce) cuotas', 12, 20),
 	('12 (doce) cuotas sin interés', 12, 0),
-	('24 (veinticuatro) cuotas', 24, 3500)
+	('24 (veinticuatro) cuotas', 24, 35)
 ;
 
 /* INSERT Nivel 5 */
@@ -1102,7 +1102,7 @@ INSERT INTO forma_pago (id_banco, id_empresa_medio_pago, codigo_medio_pago, id_t
 ;*/
 
 INSERT INTO forma_pago (id_banco, id_empresa_medio_pago, codigo_medio_pago, id_tipo_pago) VALUES
-
+	(1, 1, 'EFEC', 1),
 -- bancos
 -- Credito con todos los bancos
 

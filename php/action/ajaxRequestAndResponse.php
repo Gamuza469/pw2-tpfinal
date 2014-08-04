@@ -218,6 +218,48 @@
 			} else if ($_POST['requestType'] == 'fechaPartidaArrivo') {
 				session_start();
 				echo '{"respuesta": [{"fechaPartida": "'.$_SESSION['fechaPartida'].'", "fechaRegreso": "'.$_SESSION['fechaRegreso'].'", "idaVuelta": '.$_SESSION['idaVuelta'].'}]}';
+			} else if ($_POST['requestType'] == 'precioByClaseSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT
+						cv.precio
+					FROM
+						clase_vuelo cv
+					WHERE
+						cv.id_clase_vuelo = ".$_SESSION['clase']
+				;
+			} else if ($_POST['requestType'] == 'codigoReservaSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT
+						p.id_pasaje AS codigo_reserva
+					FROM
+						pasaje p
+					WHERE
+						p.dni = '".$_SESSION['dni']."' AND
+						p.id_clase_vuelo = ".$_SESSION['clase']." AND
+						p.vuelta = ".$_SESSION['idaVuelta']." AND
+						p.fecha_reserva = '".$_SESSION['fechaReserva']."' AND
+						p.fecha_partida = '".$_SESSION['fechaPartida']."'"
+				;
+				
+				if ($_SESSION['fechaRegreso'] != '') {
+					$stringQuery = $stringQuery." AND
+						p.fecha_regreso = '".$_SESSION['fechaRegreso']."'";
+				}
+			} else if ($_POST['requestType'] == 'reservaStatusByCodigoReservaSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT
+						p.id_pasaje AS codigo_reserva,
+						p.pagado,
+						p.checked_in,
+						p.fecha_partida
+					FROM
+						pasaje p
+					WHERE
+						p.id_pasaje = ".$_SESSION['codigoReserva']
+				;
 			}
 		}
 		//echo $stringQuery;
