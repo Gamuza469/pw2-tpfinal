@@ -139,6 +139,90 @@ function loadOtrosDatos () {
 				stringIdaVuelta += 'ida solamente.';
 			}
 			
-			$tr.parent().parent().parent().after('<div>' + stringIdaVuelta + '</div>');
+			$tr.parent().parent().parent().after('<div id="formaCircuito">' + stringIdaVuelta + '</div>');
+			loadDisponibilidad();
 	});
+}
+
+function loadDisponibilidad () {
+	$.ajax({
+		data: {
+			requestType: 'claseVueloSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		if (data.respuesta[0].id_nombre_clase == 1) {
+			loadDisponibilidadPrimera();
+		} else {
+			loadDisponibilidadEconomica();
+		}
+	});
+}
+
+function loadDisponibilidadPrimera () {
+	$.ajax({
+		data: {
+			requestType: 'filasColumnasPrimeraSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		var cantidadAsientos = calcularAsientos(data.respuesta[0].cantidad_filas_primera, data.respuesta[0].cantidad_columnas_primera);
+		calcularDisponibilidad(cantidadAsientos);
+	});
+}
+
+function loadDisponibilidadEconomica () {
+	$.ajax({
+		data: {
+			requestType: 'filasColumnasEconomySelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		var cantidadAsientos = calcularAsientos(data.respuesta[0].cantidad_filas_economy, data.respuesta[0].cantidad_columnas_economy);
+		calcularDisponibilidad(cantidadAsientos);
+	});
+}
+
+function calcularDisponibilidad (cantidadAsientos) {
+	$.ajax({
+		data: {
+			requestType: 'countPasajerosByClaseVueloSelect',
+			verify: 'valid'
+		},
+		dataType: 'json',
+		type: 'post',
+		url: './action/ajaxRequestAndResponse.php'
+	}).done(function(data){
+		var cantidadAsientosDisponibles = cantidadAsientos - parseInt(data.respuesta[0].cantidad_reservas, 10);
+		if (cantidadAsientosDisponibles <= 0) {
+			alertarDisponibilidad(cantidadAsientosDisponibles);
+		}
+	});
+}
+
+function calcularAsientos (filas, columnas) {
+	var cantidadAsientos = parseInt(filas, 10) * parseInt(columnas, 10);
+	return cantidadAsientos;
+}
+
+function alertarDisponibilidad (cantidadAsientosDisponibles) {
+	if (cantidadAsientosDisponibles >= -10) {
+		$('#formaCircuito').after('<div>Todos los lugares se encuentran reservados. Se lo colocara en lista de espera.<input type="hidden" name="posicion_espera" value="' + (-cantidadAsientosDisponibles+1) + '"/></div>');
+	} else {
+		$('#datos').hide();
+		$('#datosVuelo').hide();
+		$('#formaCircuito').hide();
+		$('#botonesReserva').hide();
+		
+		$('#formaCircuito').after('<div>No existen lugares disponibles.</div>');
+	}
 }

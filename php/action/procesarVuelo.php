@@ -112,6 +112,8 @@
 		$_SESSION['fechaRegreso'] = $fechaRegreso;
 		$_SESSION['idaVuelta'] = $idaVuelta;
 		
+		//var_dump($_POST);
+		//var_dump($_SESSION);
 		header("Location: ../formRegistroUsuario.php");
 	} else {
 		//Enviar mensaje de error mediante sesión

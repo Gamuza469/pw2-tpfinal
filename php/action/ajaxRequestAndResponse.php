@@ -239,13 +239,13 @@
 						p.dni = '".$_SESSION['dni']."' AND
 						p.id_clase_vuelo = ".$_SESSION['clase']." AND
 						p.vuelta = ".$_SESSION['idaVuelta']." AND
-						p.fecha_reserva = '".$_SESSION['fechaReserva']."' AND
-						p.fecha_partida = '".$_SESSION['fechaPartida']."'"
+						p.fecha_reserva = '".formatDateARToUTC($_SESSION['fechaReserva'])."' AND
+						p.fecha_partida = '".formatDateARToUTC($_SESSION['fechaPartida'])."'"
 				;
 				
 				if ($_SESSION['fechaRegreso'] != '') {
 					$stringQuery = $stringQuery." AND
-						p.fecha_regreso = '".$_SESSION['fechaRegreso']."'";
+						p.fecha_regreso = '".formatDateARToUTC($_SESSION['fechaRegreso'])."'";
 				}
 			} else if ($_POST['requestType'] == 'reservaStatusByCodigoReservaSelect') {
 				session_start();
@@ -254,11 +254,66 @@
 						p.id_pasaje AS codigo_reserva,
 						p.pagado,
 						p.checked_in,
-						p.fecha_partida
+						p.fecha_partida,
+						po.nombre			
 					FROM
 						pasaje p
+					INNER JOIN
+						pasajero po ON
+						p.dni = po.dni
 					WHERE
 						p.id_pasaje = ".$_SESSION['codigoReserva']
+				;
+			} else if ($_POST['requestType'] == 'filasColumnasEconomySelect') {
+				session_start();
+				$stringQuery = "
+					SELECT 
+						a.cantidad_filas_economy, 		
+						a.cantidad_columnas_economy 
+					FROM 
+						vuelo v
+					INNER JOIN
+						avion a ON
+						v.codigo_avion = a.codigo_avion
+					WHERE 
+						numero_vuelo = ".$_SESSION['vuelo']
+				;
+			} else if ($_POST['requestType'] == 'filasColumnasPrimeraSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT 
+						a.cantidad_filas_primera, 		
+						a.cantidad_columnas_primera 
+					FROM 
+						vuelo v
+					INNER JOIN
+						avion a ON
+						v.codigo_avion = a.codigo_avion
+					WHERE 
+						numero_vuelo = ".$_SESSION['vuelo']
+				;
+			} else if ($_POST['requestType'] == 'countPasajerosByClaseVueloSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT 
+						count(*) AS cantidad_reservas
+					FROM 
+						pasaje p
+					INNER JOIN
+						clase_vuelo cv ON
+						p.id_clase_vuelo = cv.id_clase_vuelo
+					WHERE
+						p.id_clase_vuelo =".$_SESSION['clase']
+				;
+			} else if ($_POST['requestType'] == 'claseVueloSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT 
+						cv.id_nombre_clase
+					FROM 
+						clase_vuelo cv
+					WHERE
+						cv.id_clase_vuelo =".$_SESSION['clase']
 				;
 			}
 		}

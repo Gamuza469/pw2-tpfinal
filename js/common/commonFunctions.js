@@ -39,10 +39,7 @@ function evaluarFechas (fechaInicial, fechaFinal, evaluarHoras) {
 	 //var fechaInicialObject = fechaStringToDateObject(fechaInicial);
 	 var fechaInicialObject = new Date();
 	 var fechaFinalObject = fechaStringToDateObject(fechaFinal);
-	 
-	 console.log(fechaInicialObject);
-	 console.log(fechaFinalObject);
-	 
+	 	 
 	 var resultadoDia = '';
 	 var resultadoMes = '';
 	 var resultadoAnio = '';
@@ -73,12 +70,7 @@ function evaluarFechas (fechaInicial, fechaFinal, evaluarHoras) {
 		if (evaluarHoras == true) {
 			resultadoGeneral = fechaInicialObject.getUTCHours() - fechaFinalObject.getUTCHours();
 		}
-	 }
-	 
-	 console.log(resultadoDia);
-	 console.log(resultadoMes);
-	 console.log(resultadoAnio);
-	 
+	 }	 
 	 
 	 return resultadoGeneral;
 }

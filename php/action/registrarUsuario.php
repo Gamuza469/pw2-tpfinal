@@ -8,6 +8,7 @@
 	$dni = '';
 	$fechaNacimiento = '';
 	$email = '';
+	$posicionEspera = '';
 	
 	if (isset ($_POST["submit"])) {
 		if (!empty($_POST["nombre"])) {
@@ -121,30 +122,32 @@
 				('".$_POST['dni']."', '".$_POST['apellido'].", ".$_POST['nombre']."', '".formatDateARToUTC($_POST['fechaNacimiento'])."', '".$_POST['email']."')
 		";
 		executeQuery($conexion, $stringQuery, $showMessages);
-		$fechaHoy = date("Y/m/d");
+		$fechaHoy = date("Y-m-d");
+		
+		if (isset($_POST['posicion_espera'])) {
+			$posicionEspera = $_POST['posicion_espera'];
+		} else {
+			$posicionEspera = 0;
+		}
+		
 		$stringQuery = "
 			INSERT INTO
 				pasaje
-					(dni, id_clase_vuelo, id_forma_pago, vuelta, fecha_reserva, fecha_partida, fecha_regreso, pagado, checked_in, numeroExcedente)
+					(dni, id_clase_vuelo, id_forma_pago, vuelta, fecha_reserva, fecha_partida, fecha_regreso, pagado, checked_in, numero_excedente)
 			VALUES
-				('".$_POST['dni']."', ".$_SESSION['clase'].", 1, ".$_SESSION['idaVuelta'].",'".$fechaHoy."', '".formatDateARToUTC($_SESSION['fechaPartida'])."', '".formatDateARToUTC($_SESSION['fechaRegreso'])."', 0, 0, 0)
+				('".$_POST['dni']."', ".$_SESSION['clase'].", 1, ".$_SESSION['idaVuelta'].",'".$fechaHoy."', '".formatDateARToUTC($_SESSION['fechaPartida'])."', '".formatDateARToUTC($_SESSION['fechaRegreso'])."', 0, 0, ".$posicionEspera.")
 		";
 		executeQuery($conexion, $stringQuery, $showMessages);
 		
 		$_SESSION['dni'] = $_POST['dni'];
-		$_SESSION['fechaReserva'] = str_replace('/', '-', $fechaHoy);
-		$_SESSION['fechaPartida'] = str_replace('/', '-', formatDateARToUTC($_SESSION['fechaPartida']));
+		$_SESSION['fechaReserva'] = formatUTCDateToBSAS($fechaHoy);
 		
-		if ($_SESSION['fechaRegreso'] != '') {
-			$_SESSION['fechaRegreso'] = str_replace('/', '-', formatDateARToUTC($_SESSION['fechaRegreso']));
-		}
-		
-		header("Location: ../formPromptPago.php");		
+		header("Location: ../formPromptPago.php");
 	} else {
 		//Enviar mensaje de error mediante sesión
 		//header("Location: ../formReservarPasaje.php");
-		var_dump($_POST);
-		echo $mensajeError;
-		//header("Location: ../formRegistroUsuario.php");
+		//var_dump($_POST);
+		//echo $mensajeError;
+		header("Location: ../formRegistroUsuario.php");
 	}
 ?>

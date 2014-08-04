@@ -43,7 +43,8 @@
 				}
 				
 				/*---------------------------------------------------------------------------------*/
-			} else if ($medioPago == 'TARC' || $medioPago == 'TARD') {
+			} 
+			if ($medioPago == 'TARC' || $medioPago == 'TARD') {
 				if (!empty($_POST["emisor"])) {
 					$emisor = $_POST["emisor"];
 				} else {
@@ -78,10 +79,7 @@
 				
 				if (!empty($_POST["nroIdentificador"])) {
 					$nroIdentificador = $_POST["nroIdentificador"];
-					if (preg_match('/\d+/', $nroIdentificador) === 0) {
-						$error = true;
-					}
-					if (strlen($nroTarjeta) > 3) {
+					if (preg_match('/\d{3,3}/', $nroIdentificador) === 0) {
 						$error = true;
 					}
 				} else {
@@ -94,7 +92,8 @@
 				}
 				
 				/*---------------------------------------------------------------------------------*/
-			} else if ($medioPago == 'PAGT' || $medioPago == 'PAGE') {
+			}
+			if ($medioPago == 'PAGT' || $medioPago == 'PAGE') {
 				if (!empty($_POST["servicio"])) {
 					$servicio = $_POST["servicio"];
 				} else {
@@ -116,15 +115,9 @@
 					$mensajeError = $mensajeError.'N&uacute;mero de cuenta inv&aacute;lido.<br>'."\n";
 					$error = false;
 				}
-			} else if ($medioPago == 'EFEC') {
-			} else {
-				$error = true;
-				
-				if ($error == true) {
-					$mensajeError = $mensajeError.'Medio de pago inv&aacute;lido.<br>'."\n";
-					$error = false;
-				}
-			}
+			} 
+			if ($medioPago == 'EFEC') {
+			} 
 		
 			/*---------------------------------------------------------------------------------*/
 			
@@ -168,16 +161,23 @@
 				pasaje
 			SET
 				pagado = 1,
-				id_forma_pago = ".$_POST['formaPagoComun']."
+				id_forma_pago = ".$formaPago.",
+				cbu = '".$nroCuenta."',
+				numero_tarjeta = '".$nroTarjeta."',
+				identificador_tarjeta = '".$nroIdentificador."'
 			WHERE
 				id_pasaje = ".$_POST['codigoReserva']
 		;
 		executeQuery($conexion, $stringQuery, $showMessages);
 		
+		//echo $stringQuery;
+		//var_dump($_POST);
 		header("Location: ../formPagoRealizado.php");
 		//Redirige a reserva vencida
 		//header("Location: ../formReservaVencida.php");
 	} else {
+		//var_dump($_POST);
+		//echo $mensajeError;
 		//Enviar mensaje de error mediante sesión
 		header("Location: ../formPagoPasaje.php");
 	}

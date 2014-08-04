@@ -167,8 +167,11 @@ CREATE TABLE pasaje (
 	fecha_reserva		DATE,
 	fecha_partida		DATE,
 	fecha_regreso		DATE,
-	numeroExcedente		INTEGER,
+	numero_excedente	INTEGER,
 	posicion			VARCHAR(6),
+	cbu					VARCHAR(22),
+	numero_tarjeta		VARCHAR(16),
+	identificador_tarjeta	VARCHAR(3),
 	PRIMARY KEY (`id_pasaje`, `dni`, `id_clase_vuelo`, `id_forma_pago`),
 	FOREIGN KEY (`dni`)					REFERENCES `pasajero` (`dni`)
 		ON UPDATE CASCADE
