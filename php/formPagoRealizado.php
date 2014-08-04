@@ -28,6 +28,10 @@
 				$('#check').click(function(){
 					window.location.href = './formCheckIn.php';
 				});
+				
+				$('#imprimirPago').click(function(){
+					window.location.href = './pdf/imprimir_comp_pago.php';
+				});
 			});
 		</script>
 	</body>

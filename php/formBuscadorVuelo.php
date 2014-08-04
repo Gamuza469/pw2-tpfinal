@@ -24,6 +24,7 @@
 							<label class="nombreItem">Destino:</label><br><input type="text" id="destino" name="destino" maxlength="128" readonly></textarea>&nbsp;
 							<input type="button" id="buscarDestino" name="buscarDestino" value="Buscar Destino"/>
 						</div>
+						<br>
 						<div id="divRuta">
 							<table id="tablaVuelos">
 								<thead>

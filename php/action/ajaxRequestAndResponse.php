@@ -352,6 +352,12 @@
 			$_SESSION['fechaPartida'] = formatUTCDateToBSAS($resultadoQuery->respuesta[0]->fecha_partida);
 			$_SESSION['fechaRegreso'] = formatUTCDateToBSAS($resultadoQuery->respuesta[0]->fecha_regreso);
 			$_SESSION['listaEspera'] = $resultadoQuery->respuesta[0]->numero_excedente;
-		}
+		} else if ($_POST['requestType'] == 'codigoReservaSelect') {
+			$resultadoQuery = json_decode($resultadoQuery);
+			//var_dump($resultadoQuery);
+			$_SESSION['codigoReserva'] = $resultadoQuery->respuesta[0]->codigo_reserva;
+		} 
+		
+		
 	}
 ?>

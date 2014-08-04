@@ -12,14 +12,16 @@
 					<div class="busca_vuelo">Estado de reserva</div>
 					<div class="busca_vue">	
 						<div class="reserva">
-							Bienvenido <span id="nombreApellido"></span>.<br>
-							Su c&oacute;digo de reserva es: <span id="codigoReserva"></span><br>
+							Bienvenido <span id="nombreApellido"></span>.<br><br>
+							Su c&oacute;digo de reserva es: <span id="codigoReserva"></span><br><br>
 							El estado de su reserva es: <span id="estadoReserva"></span>
 						</div>
+						<br>
 						<div>
 							Acci&oacute;n(es) recomendada(s):<br>
 							<span id="accionRec"></span>
 						</div>
+						<br>
 						<div>
 							<span id="comprobantes">
 								Imprimir comprobantes:<br>
@@ -105,23 +107,23 @@
 					
 					$('#estadoReserva').text(estado);
 					
-					alert(codigoEstado);
+					//alert(codigoEstado);
 					
 					switch (codigoEstado) {
 						case 0:
-							accion = '<a href="./formPagoPasaje.php">Pague su reserva ahora</a> e <a href="#">imprima su comprobante de reserva</a>.';
+							accion = '<a href="./formPagoPasaje.php">Pague su reserva ahora</a> e <a href="./pdf/imprimir_reserva.php">imprima su comprobante de reserva</a>.';
 							break;
 						case 1:
 							accion = '<a href="./formBuscadorVuelo.php">Realice una nueva reserva</a>.';
 							break;
 						case 2:
-							accion = 'Realice el check-in 48 hs. antes del vuelo. Mientras tanto <a href="#">imprima su comprobante de pago</a>.';
+							accion = 'Realice el check-in 48 hs. antes del vuelo. Mientras tanto <a href="./pdf/imprimir_comp_pago.php">imprima su comprobante de pago</a>.';
 							break;
 						case 3:
 							accion = 'No ha realizado el proceso de check-in y su pasaje ha perdido validez. El monto abonado le ser&aacute; reintegrado previa aplicaci&oacute;n de deducciones.';
 							break;
 						case 4:
-							accion = 'Imprima su <a href="#">pasaje</a> y <a href="#">boarding pass</a>. Buen viaje!';
+							accion = 'Imprima su <a href="./pdf/imprimir_boarding_dompdf.php">boarding pass</a>. Buen viaje!';
 							break;
 						case 5:
 							accion = 'Su reserva fue cedida a otro pasajero en lista de espera.<br><a href="./formBuscadorVuelo.php">Realice una nueva reserva</a>.';
@@ -133,13 +135,13 @@
 							accion = 'Si en las 48 hs. anteriores al vuelo existen reservas sin pagar, se lo habilitara a Ud. a realizar el pago de su pasaje y check-in.';
 							break;
 						case 8:
-							accion = '<a href="./formPagoPasaje.php">Pague su reserva ahora</a> e <a href="#">imprima su comprobante de reserva</a>.';
+							accion = '<a href="./formPagoPasaje.php">Pague su reserva ahora</a> e <a href="./pdf/imprimir_reserva.php">imprima su comprobante de reserva</a>.';
 							break;
 						case 9:
 							accion = '<a href="./formBuscadorVuelo.php">Realice una nueva reserva</a>.';
 							break;
 						case 10:
-							accion = 'Imprima su <a href="#">pasaje</a> y <a href="#">boarding pass</a>. Buen viaje!';
+							accion = 'Imprima su <a href="./pdf/imprimir_boarding_dompdf.php">boarding pass</a>. Buen viaje!';
 							break;
 						case 11:
 							accion = 'No ha realizado el proceso de check-in y su pasaje ha perdido validez. El monto abonado le ser&aacute; reintegrado previa aplicaci&oacute;n de deducciones.';
@@ -152,21 +154,20 @@
 						case 0:
 						case 7:
 						case 8:
-							imprimir = '<input type="submit" id="impReserva" name="impReserva" value="Comprobante de reserva"/>';
+							imprimir = '<input type="button" id="impReserva" name="impReserva" value="Comprobante de reserva"/>';
 							break;
 						case 2:
 						case 3:
 						case 6:
 						case 10:
 						case 11:
-							imprimir = '<input type="submit" id="impReserva" name="impReserva" value="Comprobante de reserva"/><br>' +
-								'<input type="submit" id="impPago" name="impPago" value="Comprobante de pago"/>';
+							imprimir = '<input type="button" id="impReserva" name="impReserva" value="Comprobante de reserva"/><br>' +
+								'<input type="button" id="impPago" name="impPago" value="Comprobante de pago"/>';
 							break;
 						case 4:
-							imprimir = '<input type="submit" id="impReserva" name="impReserva" value="Comprobante de reserva"/><br>' +
-								'<input type="submit" id="impPago" name="impPago" value="Comprobante de pago"/><br>' + 
-								'<input type="submit" id="boardingPass" name="boardingPass" value="Boarding pass"/><br>' + 
-								'<input type="submit" id="pasaje" name="pasaje" value="Pasaje impreso"/>';
+							imprimir = '<input type="button" id="impReserva" name="impReserva" value="Comprobante de reserva"/><br>' +
+								'<input type="button" id="impPago" name="impPago" value="Comprobante de pago"/><br>' + 
+								'<input type="button" id="boardingPass" name="boardingPass" value="Boarding pass"/>';
 							break;
 					}
 					
@@ -178,6 +179,16 @@
 					}
 					
 					$('#comprobantes').append(imprimir);
+					
+					$('#impReserva').click(function(){
+						window.location.href = './pdf/imprimir_reserva.php';
+					});
+					$('#impPago').click(function(){
+						window.location.href = './pdf/imprimir_comp_pago.php';
+					});
+					$('#boardingPass').click(function(){
+						window.location.href = './pdf/imprimir_boarding_dompdf.php';
+					});
 				});
 			}
 			

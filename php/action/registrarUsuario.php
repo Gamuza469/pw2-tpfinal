@@ -126,6 +126,7 @@
 		
 		if (isset($_POST['posicion_espera'])) {
 			$posicionEspera = $_POST['posicion_espera'];
+			$_SESSION['posicionEspera'] = $posicionEspera;
 		} else {
 			$posicionEspera = 0;
 		}

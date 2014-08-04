@@ -44,6 +44,8 @@ error_reporting(E_STRICT | E_ALL);
 /**
  * The root of your DOMPDF installation
  */
+define("DOMPDF_UNICODE_ENABLED ", true);
+ 
 define("DOMPDF_DIR", realpath(dirname(__FILE__)));
 
 /**

@@ -33,6 +33,7 @@
 								Se utilizar&aacute;n su DNI y c&oacute;digo de reserva para identificarlo en el sistema en pasos posteriores.
 							</div>
 						</div>
+						<br>
 						<div>
 							<table id="datosVuelo">
 								<thead>

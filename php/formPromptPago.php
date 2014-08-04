@@ -36,6 +36,10 @@
 					window.location.href = "./formBuscadorVuelo.php";
 				});
 				
+				$('#imprimirReserva').click(function(){
+					window.location.href = './pdf/imprimir_reserva.php';
+				});
+				
 				loadCodigoReserva();
 			});
 			
