@@ -334,6 +334,48 @@
 					WHERE
 						p.id_pasaje = ".$_SESSION['codigoReserva']
 				;
+			} else if ($_POST['requestType'] == 'loadPlaneSizeSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT
+						a.cantidad_filas_primera,
+						a.cantidad_columnas_primera,
+						a.cantidad_filas_economy,
+						a.cantidad_columnas_economy
+					FROM
+						avion a
+					INNER JOIN
+						vuelo v ON
+						a.codigo_avion = v.codigo_avion
+					INNER JOIN
+						clase_vuelo cv ON
+						v.numero_vuelo = cv.numero_vuelo
+					INNER JOIN
+						pasaje p ON
+						cv.id_clase_vuelo = p.id_clase_vuelo
+					WHERE
+						p.id_pasaje = ".$_SESSION['codigoReserva']
+				;
+			} else if ($_POST['requestType'] == 'loadAsientosOcupadosSelect') {
+				session_start();
+				$stringQuery = "
+					SELECT
+						p.posicion
+					FROM
+						avion a
+					INNER JOIN
+						vuelo v ON
+						a.codigo_avion = v.codigo_avion
+					INNER JOIN
+						clase_vuelo cv ON
+						v.numero_vuelo = cv.numero_vuelo
+					INNER JOIN
+						pasaje p ON
+						cv.id_clase_vuelo = p.id_clase_vuelo
+					WHERE
+						cv.id_clase_vuelo = ".$_SESSION['clase']." AND
+						p.id_pasaje != ".$_SESSION['codigoReserva']
+				;
 			}
 		}
 		//echo $stringQuery;

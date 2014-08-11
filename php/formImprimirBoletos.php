@@ -9,18 +9,15 @@
 		<div id="contenedor">
 			<form action="./action/imprimirBoletos.php" id="formImprimirBoletos" method="post">
 				<div class="encabezado">
-					<div class="boarding_pass">Pasaje y Boarding Pass</div>
+					<div class="boarding_pass">El check-in se ha completado.</div>
 					<div class="busca_vue">
 						<div>
 							<div class="imprime">
-								<label class="nombreItem">Boarding Pass</label>
-								<input name="impr_board" type="submit" value="Imprimir" />
-								<input name="save_board" type="submit" value="Guardar" /><br>
-								<label class="nombreItem">Pasaje</label>
-								<input name="impr_pasaj" type="submit" value="Imprimir" />
-								<input name="save_pasaj" type="submit" value="Guardar" />
+								<label class="nombreItem">Imprimir Boarding Pass</label>
+								<input id="impr_board" name="impr_board" type="button" value="Imprimir" />
 							</div><br>
 							<div class="boton">
+								<hr>
 								<div class="imprime"><input id="close" type="button" value="Salir" /></div>
 							</div>	
 						</div>							
@@ -32,6 +29,9 @@
 			$(document).ready(function(){
 				$('#close').click(function(){
 					window.location.href = '../index.php';
+				});
+				$('#impr_board').click(function(){
+					window.location.href = './pdf/imprimir_boarding_dompdf.php';
 				});
 			});
 		</script>
